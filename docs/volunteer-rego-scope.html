@@ -1,0 +1,657 @@
+<title>Volunteer Rego Scope</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600;700&family=Barlow+Condensed:wght@600;700;800&display=swap">
+<style>
+/* Layout: charcoal trailhead band up top, then one readable column. Each idea is a
+   phone mock-up beside its write-up. The teal parallelogram from the SingleTrack mark
+   is the only recurring flourish. Body type is large on purpose: the page should pass
+   the same test it sets for the platform. */
+:root {
+  --bg: #F4F7F6;
+  --panel: #FFFFFF;
+  --ink: #1F2A2E;
+  --slate: #56666B;
+  --rule: #D3DCDB;
+  --teal: #40CFBF;
+  --teal-ink: #0B6F66;
+  --coral: #F26B4E;
+  --coral-ink: #B8401F;
+  --band: #1F2A2E;
+  --band-ink: #F4F7F6;
+  --band-soft: #A9B8BB;
+  --on-teal: #12322F;
+  --screen: #FBFCFC;
+  --screen-ink: #1F2A2E;
+  --screen-soft: #5B6B70;
+  --screen-rule: #DCE4E3;
+  --bezel: #2B383D;
+  --display: "Barlow Condensed", "Arial Narrow", "Helvetica Neue", Arial, sans-serif;
+  --body: "Barlow", "Helvetica Neue", Arial, sans-serif;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #131A1D; --panel: #1B2529; --ink: #E9EFEE; --slate: #A3B3B6; --rule: #2E3C41;
+    --teal-ink: #5FE0D1; --coral-ink: #FF9279; --band: #0D1315; --bezel: #3A4A50;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #131A1D; --panel: #1B2529; --ink: #E9EFEE; --slate: #A3B3B6; --rule: #2E3C41;
+  --teal-ink: #5FE0D1; --coral-ink: #FF9279; --band: #0D1315; --bezel: #3A4A50;
+  color-scheme: dark;
+}
+
+* { box-sizing: border-box; }
+body { background: var(--bg); color: var(--ink); font-family: var(--body); font-size: 17px; line-height: 1.55; }
+.wrap { max-width: 1040px; margin: 0 auto; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
+h1, h2, h3 { font-family: var(--display); text-transform: uppercase; line-height: 1.02; margin: 0; text-wrap: balance; letter-spacing: 0.01em; }
+p { margin: 0; }
+.prose { max-width: 66ch; }
+.stack { display: flex; flex-direction: column; gap: 14px; }
+a { color: var(--teal-ink); }
+a:focus-visible { outline: 3px solid var(--teal); outline-offset: 2px; }
+
+/* Trailhead band */
+.band { background: var(--band); color: var(--band-ink); }
+.band .wrap { padding-block: 44px 40px; display: flex; flex-direction: column; gap: 22px; }
+.tag { display: inline-block; align-self: flex-start; background: var(--teal); color: var(--on-teal); transform: skewX(-12deg); padding: 3px 14px; font-family: var(--display); font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; font-size: 15px; }
+.tag > span { display: inline-block; transform: skewX(12deg); }
+.band h1 { font-size: clamp(42px, 8vw, 84px); font-weight: 800; }
+.band h1 em { font-style: normal; color: var(--teal); }
+.band .lede { font-size: 20px; max-width: 60ch; color: var(--band-ink); }
+.meta { display: flex; flex-wrap: wrap; gap: 10px 34px; border-top: 1px solid #3A484D; padding-top: 16px; }
+.meta div { display: flex; flex-direction: column; }
+.meta dt, .label { font-size: 12.5px; text-transform: uppercase; letter-spacing: 0.1em; font-weight: 600; }
+.meta dt { color: var(--band-soft); }
+.meta dd { margin: 0; font-weight: 500; }
+dl { margin: 0; }
+.jump { display: flex; flex-wrap: wrap; gap: 8px 20px; font-family: var(--display); text-transform: uppercase; letter-spacing: 0.06em; font-weight: 600; font-size: 17px; }
+.jump a { color: var(--teal); text-decoration: none; border-bottom: 2px solid transparent; }
+.jump a:hover { border-bottom-color: var(--teal); }
+
+section { padding-block: 52px 0; }
+section:last-of-type { padding-bottom: 64px; }
+.sec-head { display: flex; flex-direction: column; gap: 10px; margin-bottom: 26px; }
+.sec-head h2 { font-size: clamp(32px, 5vw, 48px); font-weight: 800; }
+.label { color: var(--teal-ink); }
+
+/* Margaret */
+.margaret { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 6fr); gap: 36px; align-items: start; }
+.quote { font-family: var(--display); font-weight: 600; font-size: clamp(26px, 3.4vw, 34px); line-height: 1.12; text-transform: none; }
+.quote::before { content: "\201C"; color: var(--teal-ink); }
+.quote::after { content: "\201D"; color: var(--teal-ink); }
+.facts { display: flex; flex-direction: column; gap: 8px; color: var(--slate); margin-top: 18px; }
+.test { list-style: none; margin: 0; padding: 0; counter-reset: t; display: flex; flex-direction: column; }
+.test li { counter-increment: t; display: grid; grid-template-columns: 44px minmax(0, 1fr); gap: 4px 10px; padding: 13px 0; border-top: 1px solid var(--rule); }
+.test li:last-child { border-bottom: 1px solid var(--rule); }
+.test li::before { content: counter(t); font-family: var(--display); font-weight: 800; font-size: 30px; line-height: 1; color: var(--teal-ink); }
+.test strong { display: block; }
+.test span { color: var(--slate); }
+
+/* Three-up plain columns */
+.cols { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 28px; }
+.cols h3 { font-size: 24px; font-weight: 700; margin-bottom: 6px; }
+.cols > div { border-top: 3px solid var(--ink); padding-top: 12px; }
+.cols p { color: var(--slate); }
+
+/* Journey */
+.journey { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 0; border-top: 3px solid var(--ink); }
+.journey > div { padding: 14px 14px 4px 0; display: flex; flex-direction: column; gap: 10px; min-width: 0; }
+.journey > div + div { border-left: 1px solid var(--rule); padding-left: 14px; }
+.journey h3 { font-size: 24px; font-weight: 700; }
+.journey .step { font-family: var(--display); font-weight: 700; color: var(--teal-ink); letter-spacing: 0.08em; font-size: 15px; }
+.journey ul, .pc ul, .plain { margin: 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 7px; }
+.journey li { font-size: 15.5px; line-height: 1.4; }
+.journey .who { font-size: 12px; text-transform: uppercase; letter-spacing: 0.1em; font-weight: 600; color: var(--slate); margin-top: 4px; }
+.split { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 36px; margin-top: 36px; }
+.split h3 { font-size: 26px; font-weight: 700; margin-bottom: 12px; }
+.plain li { padding-left: 20px; position: relative; }
+.plain li::before { content: ""; position: absolute; left: 0; top: 0.62em; width: 9px; height: 9px; background: var(--teal); transform: skewX(-12deg); }
+
+/* Ideas */
+.idea { display: grid; grid-template-columns: 250px minmax(0, 1fr); gap: 40px; padding-block: 40px; border-top: 1px solid var(--rule); align-items: start; }
+.idea:first-of-type { border-top: 3px solid var(--ink); }
+.idea-head { display: flex; flex-direction: column; gap: 8px; }
+.idea-head h3 { font-size: clamp(30px, 4.2vw, 42px); font-weight: 800; }
+.idea-num { font-family: var(--display); font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--teal-ink); font-size: 16px; }
+.idea-body { display: flex; flex-direction: column; gap: 20px; min-width: 0; }
+.spec { display: flex; flex-wrap: wrap; gap: 10px 30px; padding: 12px 0; border-block: 1px solid var(--rule); }
+.spec div { display: flex; flex-direction: column; }
+.spec dt { font-size: 12px; text-transform: uppercase; letter-spacing: 0.1em; font-weight: 600; color: var(--slate); }
+.spec dd { margin: 0; font-weight: 600; }
+.pc { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 28px; }
+.pc h4 { margin: 0 0 10px; font-family: var(--display); text-transform: uppercase; font-size: 21px; letter-spacing: 0.05em; }
+.pros h4 { color: var(--teal-ink); }
+.cons h4 { color: var(--coral-ink); }
+.pc li { padding-left: 24px; position: relative; font-size: 16px; line-height: 1.42; }
+.pc li::before { position: absolute; left: 0; top: -1px; font-weight: 700; font-size: 18px; }
+.pros li::before { content: "+"; color: var(--teal-ink); }
+.cons li::before { content: "\2212"; color: var(--coral-ink); }
+.says { background: var(--panel); border: 1px solid var(--rule); padding: 16px 18px; display: flex; flex-direction: column; gap: 6px; }
+.says p:last-child { font-size: 18px; font-style: italic; }
+
+/* Phone mock-ups. Screens stay light in both themes, like a real phone in daylight. */
+.phone { width: 250px; max-width: 100%; background: var(--bezel); border-radius: 30px; padding: 10px; justify-self: center; }
+.screen { background: var(--screen); color: var(--screen-ink); border-radius: 22px; min-height: 440px; padding: 16px 14px; display: flex; flex-direction: column; gap: 12px; font-size: 14px; line-height: 1.3; overflow: hidden; }
+.screen .top { font-family: var(--display); text-transform: uppercase; font-weight: 700; letter-spacing: 0.06em; font-size: 14px; color: var(--screen-soft); display: flex; justify-content: space-between; }
+.screen h5 { margin: 0; font-family: var(--display); text-transform: uppercase; font-size: 23px; line-height: 1.05; font-weight: 700; }
+.screen small { color: var(--screen-soft); font-size: 12.5px; }
+.btn { display: block; background: var(--teal); color: var(--on-teal); font-weight: 700; text-align: center; padding: 11px 8px; border-radius: 10px; font-size: 15px; }
+.btn.ghost { background: transparent; border: 2px solid var(--screen-rule); color: var(--screen-ink); }
+.btn.pick { border-color: var(--teal); box-shadow: inset 0 0 0 1px var(--teal); }
+.help { margin-top: auto; text-align: center; font-size: 12.5px; color: var(--screen-soft); border-top: 1px solid var(--screen-rule); padding-top: 9px; }
+.help b { color: var(--screen-ink); }
+.mapbox { border: 1px solid var(--screen-rule); border-radius: 12px; overflow: hidden; }
+.mapbox svg { display: block; width: 100%; height: auto; }
+.sheet { border: 1px solid var(--screen-rule); border-radius: 12px; padding: 10px; display: flex; flex-direction: column; gap: 6px; }
+.chips { display: flex; flex-wrap: wrap; gap: 5px; }
+.chip { border: 1.5px solid var(--screen-rule); border-radius: 99px; padding: 3px 9px; font-size: 12px; font-weight: 600; }
+.chip.on { background: var(--screen-ink); color: var(--screen); border-color: var(--screen-ink); }
+.card { border: 1px solid var(--screen-rule); border-radius: 12px; overflow: hidden; }
+.card .pic { height: 62px; background: var(--teal); position: relative; overflow: hidden; }
+.card .pic::before, .card .pic::after { content: ""; position: absolute; bottom: -30px; width: 120px; height: 80px; background: var(--on-teal); opacity: 0.28; transform: rotate(45deg); }
+.card .pic::before { left: 10px; } .card .pic::after { left: 100px; bottom: -44px; opacity: 0.18; }
+.card .pic.b { background: var(--coral); }
+.card .txt { padding: 8px 10px 10px; display: flex; flex-direction: column; gap: 2px; }
+.card b { font-size: 14.5px; }
+.left { color: var(--coral-ink); font-weight: 700; font-size: 12.5px; }
+.screen .left { color: #B8401F; }
+.sms { display: flex; flex-direction: column; gap: 8px; }
+.bub { max-width: 88%; padding: 8px 11px; border-radius: 14px; background: #E6ECEB; color: var(--screen-ink); font-size: 13.5px; }
+.bub.me { align-self: flex-end; background: var(--teal); color: var(--on-teal); font-weight: 700; }
+.stamps { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+.stamp { aspect-ratio: 1; border-radius: 50%; border: 2px dashed var(--screen-rule); display: grid; place-items: center; font-family: var(--display); font-weight: 700; font-size: 11px; text-transform: uppercase; text-align: center; line-height: 1.05; color: var(--screen-soft); padding: 4px; }
+.stamp.got { border: 3px double var(--on-teal); background: var(--teal); color: var(--on-teal); transform: rotate(-8deg); }
+.stamp.got:nth-child(2) { transform: rotate(6deg); }
+.bar { height: 9px; border-radius: 9px; background: var(--screen-rule); overflow: hidden; }
+.bar i { display: block; height: 100%; width: 60%; background: var(--teal); }
+
+/* Scorecard */
+.scroll { overflow-x: auto; }
+table { border-collapse: collapse; width: 100%; min-width: 760px; font-size: 15.5px; }
+th, td { text-align: left; padding: 11px 12px 11px 0; border-bottom: 1px solid var(--rule); vertical-align: middle; }
+thead th { font-size: 12px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--slate); border-bottom: 2px solid var(--ink); font-weight: 600; }
+tbody th { font-family: var(--display); text-transform: uppercase; font-size: 20px; letter-spacing: 0.02em; white-space: nowrap; }
+.dots { display: inline-flex; gap: 3px; }
+.dots i { width: 10px; height: 10px; border-radius: 50%; border: 1.5px solid var(--slate); }
+.dots i.f { background: var(--teal-ink); border-color: var(--teal-ink); }
+.note { color: var(--slate); font-size: 15px; margin-top: 12px; }
+
+/* Recommendation */
+.rec { background: var(--band); color: var(--band-ink); padding: 30px 28px; display: flex; flex-direction: column; gap: 18px; }
+.rec h3 { font-size: clamp(28px, 4vw, 40px); font-weight: 800; }
+.rec h3 em { font-style: normal; color: var(--teal); }
+.phases { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 24px; }
+.phases > div { border-top: 3px solid var(--teal); padding-top: 10px; display: flex; flex-direction: column; gap: 6px; }
+.phases b { font-family: var(--display); text-transform: uppercase; font-size: 21px; letter-spacing: 0.04em; }
+.phases span { color: var(--band-soft); font-size: 15.5px; }
+.rec .why { color: var(--band-soft); max-width: 70ch; }
+
+@media (max-width: 860px) {
+  .margaret, .split, .pc, .phases, .cols { grid-template-columns: minmax(0, 1fr); }
+  .journey { grid-template-columns: minmax(0, 1fr); border-top: 0; }
+  .journey > div, .journey > div + div { border-left: 0; padding: 14px 0; border-top: 1px solid var(--rule); }
+  .idea { grid-template-columns: minmax(0, 1fr); gap: 24px; }
+  .rec { padding: 24px 18px; }
+}
+</style>
+
+<header class="band">
+  <div class="wrap">
+    <span class="tag"><span>Scope for discussion</span></span>
+    <h1>Put your hand up. <em>We'll do the rest.</em></h1>
+    <p class="lede">A scope for a new SingleTrack volunteer rego platform to replace iVolunteer, with five ways we could build it. Every idea has been walked through by Margaret, who is 70, loves a chat and does not love passwords.</p>
+    <dl class="meta">
+      <div><dt>Version</dt><dd>0.1 draft</dd></div>
+      <div><dt>Issued</dt><dd>11 November 2026</dd></div>
+      <div><dt>Owner</dt><dd>Operations Manager</dd></div>
+      <div><dt>Covers</dt><dd>The whole volunteer journey</dd></div>
+    </dl>
+    <nav class="jump" aria-label="Sections">
+      <a href="#margaret">Meet Margaret</a>
+      <a href="#scope">The scope</a>
+      <a href="#ideas">Five ideas</a>
+      <a href="#scorecard">Scorecard</a>
+      <a href="#pick">Our pick</a>
+      <a href="#open">Open items</a>
+    </nav>
+  </div>
+</header>
+
+<main class="wrap">
+
+<section id="margaret">
+  <div class="sec-head">
+    <span class="label">Who we are designing for</span>
+    <h2>Meet Margaret</h2>
+  </div>
+  <div class="margaret">
+    <div>
+      <p class="quote">My grandson is running, so I thought I'd help out. I just want to know where to stand, what time, and who to ring if I get stuck.</p>
+      <div class="facts">
+        <p>Margaret is a made-up volunteer, but you have met her at every aid station. She is 70. She has an iPad on the kitchen bench and a phone she mostly uses for calls, texts, photos and Facebook. She reads with her glasses on and taps with one careful finger.</p>
+        <p>She is happy to give up a Saturday. She is not happy to create an account, invent a password, or scroll a spreadsheet of shift codes. If the first screen looks like hard work, she closes it and tells her grandson she tried.</p>
+        <p>If the platform works for Margaret, it works for everyone. That is the design rule for this whole scope.</p>
+      </div>
+    </div>
+    <div>
+      <p class="label" style="margin-bottom:10px">The Margaret test</p>
+      <ol class="test">
+        <li><div><strong>Look before you sign in.</strong><span>She can see every job, where it is and when, before giving a single detail.</span></div></li>
+        <li><div><strong>One question per screen.</strong><span>Big words, big buttons, plain English. "Hand out drinks", never "AS2 Vol Shift B".</span></div></li>
+        <li><div><strong>Show me, don't tell me.</strong><span>Photos of the job and a picture of where it is. She should recognise it when she arrives.</span></div></li>
+        <li><div><strong>No password, ever.</strong><span>Her name, her mobile and a link sent to her are enough to get back in.</span></div></li>
+        <li><div><strong>A human on every screen.</strong><span>A phone number she can ring, and a team member who can finish the sign-up for her.</span></div></li>
+        <li><div><strong>Tell me what I said yes to.</strong><span>Straight away: the job, the place, the time, what to bring and who her contact is.</span></div></li>
+        <li><div><strong>Easy to change my mind.</strong><span>One tap to swap or pull out, with no guilt and no hunting through menus.</span></div></li>
+        <li><div><strong>Ask for less, explain why.</strong><span>Only the details the job needs, each with a plain reason beside it.</span></div></li>
+      </ol>
+    </div>
+  </div>
+</section>
+
+<section id="why">
+  <div class="sec-head">
+    <span class="label">What hurts today</span>
+    <h2>Why iVolunteer has to go</h2>
+  </div>
+  <div class="cols">
+    <div><h3>Hard to find a role</h3><p>Volunteers can't easily see what jobs exist, where they are on course, or which one suits them. They pick blind or they give up.</p></div>
+    <div><h3>Clunky on a phone</h3><p>Too much text, small buttons and nothing visual. Most people open the sign-up link on a phone, so that is where we lose them.</p></div>
+    <div><h3>Painful for the team</h3><p>Setting up events, filling gaps, moving people between shifts, messaging and reporting all take too long for the Event Management Team.</p></div>
+  </div>
+  <p class="prose" style="margin-top:26px">What we want in its place: intuitive, visual, easy to find what you want, fun, and safe with people's details. Volunteers are the heart of every SingleTrack event. Signing up should feel like the start of a good day out, not a form.</p>
+</section>
+
+<section id="scope">
+  <div class="sec-head">
+    <span class="label">What the platform covers</span>
+    <h2>The scope: the whole volunteer journey</h2>
+    <p class="prose">Five stages, from first look to thank-you. Each stage has a volunteer side and a team side, and both are in scope.</p>
+  </div>
+  <div class="journey">
+    <div>
+      <span class="step">STAGE 1</span><h3>Find</h3>
+      <p class="who">Volunteer</p>
+      <ul><li>See every event and every job without signing in</li><li>Photos, plain job names, place and time</li><li>See what is nearly full and what needs help most</li></ul>
+      <p class="who">Team</p>
+      <ul><li>Set up an event from last year's template</li><li>Write a job once, reuse it across events</li></ul>
+    </div>
+    <div>
+      <span class="step">STAGE 2</span><h3>Sign up</h3>
+      <p class="who">Volunteer</p>
+      <ul><li>Name, mobile, email and an emergency contact</li><li>Sign up with a friend, a family or a running club</li><li>Instant confirmation on screen and by message</li></ul>
+      <p class="who">Team</p>
+      <ul><li>Sign someone up over the phone on their behalf</li><li>Caps and waitlists for each job</li></ul>
+    </div>
+    <div>
+      <span class="step">STAGE 3</span><h3>Get ready</h3>
+      <p class="who">Volunteer</p>
+      <ul><li>Reminders a week out and the day before</li><li>One page with place, time, parking, what to bring and the induction handbook</li><li>Swap or pull out with one tap</li></ul>
+      <p class="who">Team</p>
+      <ul><li>Live roster with gaps showing</li><li>Message one job, one aid station or everyone</li></ul>
+    </div>
+    <div>
+      <span class="step">STAGE 4</span><h3>Race day</h3>
+      <p class="who">Volunteer</p>
+      <ul><li>Check in with a tap or have their name ticked off</li><li>Their contact for the day and how to reach Event HQ</li></ul>
+      <p class="who">Team</p>
+      <ul><li>Who has arrived, by aid station and job</li><li>Printable roster as a backup</li><li>Emergency contacts on hand for the people who need them</li></ul>
+    </div>
+    <div>
+      <span class="step">STAGE 5</span><h3>Afterwards</h3>
+      <p class="who">Volunteer</p>
+      <ul><li>A proper thank-you with photos from the day</li><li>Rewards and credits recorded for them</li><li>First look at next year's jobs</li></ul>
+      <p class="who">Team</p>
+      <ul><li>Hours, numbers and no-shows by event</li><li>Feedback gathered in one place</li></ul>
+    </div>
+  </div>
+
+  <div class="split">
+    <div>
+      <h3>Keeping people's details safe</h3>
+      <ul class="plain">
+        <li>Collect only what the job needs: name, mobile, email, emergency contact, and anything a specific role requires.</li>
+        <li>Sign-in by a link or code sent to the volunteer, so there are no passwords to steal or forget.</li>
+        <li>Details stored in Australia and handled under the Privacy Act and the Australian Privacy Principles.</li>
+        <li>Each team member sees only what their role needs. Emergency contacts are visible to the Event Management Team for that event.</li>
+        <li>Two-step sign-in for every team account.</li>
+        <li>A plain-English privacy page: what we keep, why, for how long, and how to have it deleted.</li>
+        <li>Details are removed after a set period of inactivity, and on request.</li>
+        <li>A written plan for what happens if something goes wrong, with a named owner.</li>
+      </ul>
+    </div>
+    <div>
+      <h3>For later, after launch</h3>
+      <ul class="plain">
+        <li>Linking volunteer credits straight into runner entries.</li>
+        <li>Paid crew and contractor rostering.</li>
+        <li>A phone app in the app stores. A good web page that works on any phone comes first.</li>
+        <li>Languages other than English.</li>
+      </ul>
+      <h3 style="margin-top:28px">Built for everyone</h3>
+      <ul class="plain">
+        <li>Text at least 18px, strong contrast, buttons a thumb can't miss.</li>
+        <li>Works on an old phone, an iPad and a slow connection in Halls Gap.</li>
+        <li>Works with screen readers and meets WCAG 2.2 AA.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section id="ideas">
+  <div class="sec-head">
+    <span class="label">Five ways to do it</span>
+    <h2>Five platform ideas</h2>
+    <p class="prose">Each idea pairs a volunteer experience with the build route that suits it. The screens are rough sketches to show the feel, with example jobs and times. Margaret has her say on each one.</p>
+  </div>
+
+  <!-- 1 -->
+  <article class="idea" id="trail-map">
+    <div class="phone" role="img" aria-label="Sketch of a phone showing a course map with pins for each volunteer location">
+      <div class="screen">
+        <div class="top"><span>Example event</span><span>Saturday</span></div>
+        <h5>Where would you like to be?</h5>
+        <div class="mapbox">
+          <svg viewBox="0 0 220 150" xmlns="http://www.w3.org/2000/svg">
+            <rect width="220" height="150" fill="#E4F3EF"/>
+            <path d="M0 118 L48 70 L78 96 L120 44 L160 88 L190 62 L220 92 L220 150 L0 150Z" fill="#CFE6DF"/>
+            <path d="M20 128 C50 120 52 96 80 98 S110 60 128 58 S168 96 196 74" fill="none" stroke="#1F2A2E" stroke-width="3" stroke-dasharray="1 7" stroke-linecap="round"/>
+            <circle cx="20" cy="128" r="8" fill="#1F2A2E"/>
+            <circle cx="80" cy="98" r="8" fill="#1F2A2E"/>
+            <circle cx="128" cy="58" r="12" fill="#F26B4E" stroke="#1F2A2E" stroke-width="3"/>
+            <circle cx="196" cy="74" r="8" fill="#1F2A2E"/>
+            <text x="20" y="146" font-size="9" font-family="Arial" fill="#1F2A2E" text-anchor="middle" font-weight="700">Village</text>
+            <text x="128" y="36" font-size="9" font-family="Arial" fill="#1F2A2E" text-anchor="middle" font-weight="700">Aid Station 2</text>
+            <text x="194" y="98" font-size="9" font-family="Arial" fill="#1F2A2E" text-anchor="middle" font-weight="700">Summit</text>
+          </svg>
+        </div>
+        <div class="sheet">
+          <b>Aid Station 2: drinks and cheers</b>
+          <small>Saturday 7am to 11am &middot; 25 min drive from the village &middot; shelter and chairs</small>
+          <span class="left">3 spots left</span>
+          <span class="btn">I'll do this one</span>
+        </div>
+        <div class="help">Stuck? Ring us on <b>[phone]</b></div>
+      </div>
+    </div>
+    <div class="idea-body">
+      <div class="idea-head">
+        <span class="idea-num">Idea 1</span>
+        <h3>The Trail Map</h3>
+        <p class="prose">Every event opens on an illustrated course map. Tap the village, an aid station or a summit and see the jobs there, the times, a photo of the spot and how many places are left. The team sees the same map with gaps glowing, so filling the roster is as visual as signing up.</p>
+      </div>
+      <dl class="spec">
+        <div><dt>Build route</dt><dd>Custom web build, map first</dd></div>
+        <div><dt>Time to first event</dt><dd>Longer</dd></div>
+        <div><dt>Running cost</dt><dd>Medium, plus map artwork per event</dd></div>
+      </dl>
+      <div class="pc">
+        <div class="pros"><h4>Pros</h4><ul>
+          <li>The most visual option. It answers "where will I be?" before anything else.</li>
+          <li>Shows off the locations, which is the reason people love these events.</li>
+          <li>The team spots unfilled positions at a glance.</li>
+          <li>Nothing else in volunteering looks like it. It would be ours.</li>
+        </ul></div>
+        <div class="cons"><h4>Cons</h4><ul>
+          <li>Maps are fiddly on a small phone, and harder again for unsteady hands.</li>
+          <li>Plenty of people don't read maps. It needs a plain list beside it.</li>
+          <li>Each event needs its own map drawn and kept up to date when courses change.</li>
+          <li>Remote pins can put first-timers off unless travel time and facilities are spelled out.</li>
+        </ul></div>
+      </div>
+      <div class="says"><p class="label">Margaret says</p><p>"Oh, that's pretty. But where's Halls Gap on this? I'd rather you just told me which jobs are near the car park."</p></div>
+    </div>
+  </article>
+
+  <!-- 2 -->
+  <article class="idea" id="three-questions">
+    <div class="phone" role="img" aria-label="Sketch of a phone showing one question with four large answer buttons">
+      <div class="screen">
+        <div class="top"><span>Question 2 of 3</span><span>Back</span></div>
+        <h5>What sort of job sounds good?</h5>
+        <span class="btn ghost">On my feet, in the action</span>
+        <span class="btn ghost pick">Sitting down is best</span>
+        <span class="btn ghost">Chatting with runners</span>
+        <span class="btn ghost">Somewhere quiet in the bush</span>
+        <span class="btn ghost">Surprise me, put me where I'm needed</span>
+        <div class="help">Rather talk to a person? <b>[phone]</b></div>
+      </div>
+    </div>
+    <div class="idea-body">
+      <div class="idea-head">
+        <span class="idea-num">Idea 2</span>
+        <h3>Three Easy Questions</h3>
+        <p class="prose">A friendly helper asks three things: which event, when are you free, and what sort of job sounds good. It then offers the three best matches as big cards. Pick one, add your name and mobile, done. Behind the scenes it steers people towards the jobs that most need filling.</p>
+      </div>
+      <dl class="spec">
+        <div><dt>Build route</dt><dd>Low-code: form, database and automations</dd></div>
+        <div><dt>Time to first event</dt><dd>Quickest</dd></div>
+        <div><dt>Running cost</dt><dd>Low monthly fees</dd></div>
+      </dl>
+      <div class="pc">
+        <div class="pros"><h4>Pros</h4><ul>
+          <li>One decision per screen. Nobody gets lost.</li>
+          <li>Matches people to jobs they can do comfortably, including seated and low-walking roles.</li>
+          <li>"Put me where I'm needed" quietly fills the hard positions.</li>
+          <li>Fast and cheap to stand up, so we can test it with real volunteers early.</li>
+        </ul></div>
+        <div class="cons"><h4>Cons</h4><ul>
+          <li>You can't browse everything. People who want a specific aid station need another way in.</li>
+          <li>Regulars will find three questions slow the fifth time around.</li>
+          <li>Low-code tools set limits on look, feel and where details are stored.</li>
+          <li>The team side is basic. Rostering and race-day check-in would be bolted on.</li>
+        </ul></div>
+      </div>
+      <div class="says"><p class="label">Margaret says</p><p>"Well, that was easy. It asked me, I answered, and it found me a chair at the finish line. Why isn't everything like this?"</p></div>
+    </div>
+  </article>
+
+  <!-- 3 -->
+  <article class="idea" id="noticeboard">
+    <div class="phone" role="img" aria-label="Sketch of a phone showing photo cards for volunteer jobs with filter buttons">
+      <div class="screen">
+        <div class="top"><span>Example event</span><span>12 jobs</span></div>
+        <div class="chips"><span class="chip on">Saturday</span><span class="chip">Sunday</span><span class="chip on">Sitting down</span><span class="chip">Near village</span></div>
+        <div class="card"><div class="pic"></div><div class="txt"><b>Hand out finish medals</b><small>Sat 9am to 1pm &middot; Event village</small><span class="left">6 spots left</span></div></div>
+        <div class="card"><div class="pic b"></div><div class="txt"><b>Welcome desk and bib pick-up</b><small>Sat 6am to 9am &middot; Event village</small><span class="left">2 spots left</span></div></div>
+        <div class="help">Stuck? Ring us on <b>[phone]</b></div>
+      </div>
+    </div>
+    <div class="idea-body">
+      <div class="idea-head">
+        <span class="idea-num">Idea 3</span>
+        <h3>The Noticeboard</h3>
+        <p class="prose">Like the board at the community hall. Every job is a big photo card with a plain name, the time, the place and the spots left. A few chunky filters narrow it down: day, sitting or standing, near the village. Tap a card, tap "count me in".</p>
+      </div>
+      <dl class="spec">
+        <div><dt>Build route</dt><dd>Buy a better off-the-shelf product and style it</dd></div>
+        <div><dt>Time to first event</dt><dd>Quick</dd></div>
+        <div><dt>Running cost</dt><dd>Subscription, grows with volunteer numbers</dd></div>
+      </dl>
+      <div class="pc">
+        <div class="pros"><h4>Pros</h4><ul>
+          <li>Familiar. Anyone who has shopped online knows how cards and filters work.</li>
+          <li>The team tools come ready-made: rostering, messaging, check-in and reports.</li>
+          <li>The supplier looks after security, hosting and support.</li>
+          <li>Lowest delivery risk. The product already works for other events.</li>
+        </ul></div>
+        <div class="cons"><h4>Cons</h4><ul>
+          <li>We get their sign-up flow. It may end up only a little better than iVolunteer.</li>
+          <li>Limited say over accounts and passwords, which is the Margaret deal-breaker.</li>
+          <li>Where details are stored and how we get them out again depends on the supplier.</li>
+          <li>Map views and the fun touches are unlikely to be on offer.</li>
+        </ul></div>
+      </div>
+      <div class="says"><p class="label">Margaret says</p><p>"I like the photos. I can see what I'd be doing. But then it wanted a password with a capital letter and a symbol, and I went and put the kettle on."</p></div>
+    </div>
+  </article>
+
+  <!-- 4 -->
+  <article class="idea" id="text-me">
+    <div class="phone" role="img" aria-label="Sketch of a phone showing a text message conversation confirming a volunteer shift">
+      <div class="screen">
+        <div class="top"><span>Messages</span><span>SingleTrack</span></div>
+        <div class="sms">
+          <span class="bub">Hi Margaret, you're in! Finish medals, Saturday 9am at the event village. Reply YES to lock it in, or CALL and we'll ring you.</span>
+          <span class="bub me">YES</span>
+          <span class="bub">Legend. We'll text you on Thursday with parking and what to bring.</span>
+          <span class="bub">Reminder: see you Saturday 9am. Your contact on the day is the Aid Station Manager at the village. Can't make it? Reply SWAP.</span>
+        </div>
+        <div class="help">No app. No password. Just texts.</div>
+      </div>
+    </div>
+    <div class="idea-body">
+      <div class="idea-head">
+        <span class="idea-num">Idea 4</span>
+        <h3>Text Me a Link</h3>
+        <p class="prose">One short sign-up page on the SingleTrack website, then everything else arrives by text and email: confirmation, reminders, parking, what to bring. Reply YES to confirm or SWAP to change. A personal link opens "my volunteering" with no sign-in. Anyone who would rather talk can ring, and the team signs them up on the spot.</p>
+      </div>
+      <dl class="spec">
+        <div><dt>Build route</dt><dd>Add-on to the existing website plus a messaging service</dd></div>
+        <div><dt>Time to first event</dt><dd>Quick</dd></div>
+        <div><dt>Running cost</dt><dd>Low, plus a fee per text</dd></div>
+      </dl>
+      <div class="pc">
+        <div class="pros"><h4>Pros</h4><ul>
+          <li>Meets volunteers where they already are. Everyone can read a text.</li>
+          <li>Nothing to remember and nothing to install.</li>
+          <li>Reminders with a one-word reply cut no-shows and tell the team early about gaps.</li>
+          <li>Holds very little personal detail, so there is less to protect.</li>
+        </ul></div>
+        <div class="cons"><h4>Cons</h4><ul>
+          <li>Older volunteers are rightly told to distrust links in texts. Messages must be clearly ours.</li>
+          <li>The least visual and least fun of the five.</li>
+          <li>Browsing jobs happens somewhere else, so finding a role is only half solved.</li>
+          <li>Someone has to handle the replies that aren't YES or SWAP.</li>
+        </ul></div>
+      </div>
+      <div class="says"><p class="label">Margaret says</p><p>"A text I can manage. Though my daughter says never click on links, so I'd want to know it's really you."</p></div>
+    </div>
+  </article>
+
+  <!-- 5 -->
+  <article class="idea" id="crew-club">
+    <div class="phone" role="img" aria-label="Sketch of a phone showing a volunteer's collection of event stamps and progress to a reward">
+      <div class="screen">
+        <div class="top"><span>Crew Club</span><span>Margaret</span></div>
+        <h5>G'day Margaret. Three events crewed!</h5>
+        <div class="stamps">
+          <span class="stamp got">Event one</span><span class="stamp got">Event two</span><span class="stamp got">Event three</span>
+          <span class="stamp">Next</span><span class="stamp">Then</span><span class="stamp">After</span>
+        </div>
+        <small>Two more stamps to your next reward</small>
+        <div class="bar"><i></i></div>
+        <span class="btn">Same job as last time? One tap</span>
+        <span class="btn ghost">Bring a friend along</span>
+        <div class="help">Stuck? Ring us on <b>[phone]</b></div>
+      </div>
+    </div>
+    <div class="idea-body">
+      <div class="idea-head">
+        <span class="idea-num">Idea 5</span>
+        <h3>The Crew Club</h3>
+        <p class="prose">A home for SingleTrack volunteers. A passport that collects a stamp for every event crewed, rewards that build up, photos from the day, and one-tap sign-up for regulars. Friends, families and running clubs sign up as a team. For the Event Management Team it is the full kit: templates, rostering, messaging, race-day check-in and reporting in one place.</p>
+      </div>
+      <dl class="spec">
+        <div><dt>Build route</dt><dd>Full custom platform, built in phases</dd></div>
+        <div><dt>Time to first event</dt><dd>Longest</dd></div>
+        <div><dt>Running cost</dt><dd>Highest, with ongoing upkeep</dd></div>
+      </dl>
+      <div class="pc">
+        <div class="pros"><h4>Pros</h4><ul>
+          <li>The most fun, and the best at bringing volunteers back year after year.</li>
+          <li>Regulars sign up in one tap. The platform already knows them.</li>
+          <li>Covers the whole journey for volunteers and for the team.</li>
+          <li>SingleTrack owns the experience and the data, with nobody else's limits.</li>
+        </ul></div>
+        <div class="cons"><h4>Cons</h4><ul>
+          <li>The biggest and slowest build, and someone has to maintain it for years.</li>
+          <li>Holds the most personal detail, so the security job is the largest.</li>
+          <li>The payoff comes on a volunteer's third event, not their first.</li>
+          <li>Stamps and rewards can feel childish if overdone. They need a light touch.</li>
+        </ul></div>
+      </div>
+      <div class="says"><p class="label">Margaret says</p><p>"Stamps! Like my coffee card. I'd want all eleven. But I only got here because someone helped me join the first time."</p></div>
+    </div>
+  </article>
+</section>
+
+<section id="scorecard">
+  <div class="sec-head">
+    <span class="label">Side by side</span>
+    <h2>The scorecard</h2>
+    <p class="prose">A first read, scored out of five against what we said we wanted. More dots is better in every column, so five dots under cost means cheapest. These are judgement calls, here to be argued over.</p>
+  </div>
+  <div class="scroll">
+    <table>
+      <thead><tr><th>Idea</th><th>Passes the Margaret test</th><th>Visual</th><th>Fun</th><th>Easy to find a role</th><th>Eases the team's load</th><th>Data safety</th><th>Speed to launch</th><th>Cost</th></tr></thead>
+      <tbody>
+        <tr><th>Trail Map</th><td><span class="dots" aria-label="3 of 5"><i class="f"></i><i class="f"></i><i class="f"></i><i></i><i></i></span></td><td><span class="dots" aria-label="5 of 5"><i class="f"></i><i class="f"></i><i class="f"></i><i class="f"></i><i class="f"></i></span></td><td><span class="dots" aria-label="4 of 5"><i class="f"></i><i class="f"></i><i class="f"></i><i class="f"></i><i></i></span></td><td><span class="dots" aria-label="4 of 5"><i class="f"></i><i class="f"></i><i class="f"></i><i class="f"></i><i></i></span></td><td><span class="dots" aria-label="3 of 5"><i class="f"></i><i class="f"></i><i class="f"></i><i></i><i></i></span></td><td><span class="dots" aria-label="4 of 5"><i class="f"></i><i class="f"></i><i class="f"></i><i class="f"></i><i></i></span></td><td><span class="dots" aria-label="2 of 5"><i class="f"></i><i class="f"></i><i></i><i></i><i></i></span></td><td><span class="dots" aria-label="2 of 5"><i class="f"></i><i class="f"></i><i></i><i></i><i></i></span></td></tr>
+        <tr><th>Three Easy Questions</th><td><span class="dots" aria-label="5 of 5"><i class="f"></i><i class="f"></i><i class="f"></i><i class="f"></i><i class="f"></i></span></td><td><span class="dots" aria-label="3 of 5"><i class="f"></i><i class="f"></i><i class="f"></i><i></i><i></i></span></td><td><span class="dots" aria-label="3 of 5"><i class="f"></i><i class="f"></i><i class="f"></i><i></i><i></i></span></td><td><span class="dots" aria-label="4 of 5"><i class="f"></i><i class="f"></i><i class="f"></i><i class="f"></i><i></i></span></td><td><span class="dots" aria-label="2 of 5"><i class="f"></i><i class="f"></i><i></i><i></i><i></i></span></td><td><span class="dots" aria-label="3 of 5"><i class="f"></i><i class="f"></i><i class="f"></i><i></i><i></i></span></td><td><span class="dots" aria-label="5 of 5"><i class="f"></i><i class="f"></i><i class="f"></i><i class="f"></i><i class="f"></i></span></td><td><span class="dots" aria-label="4 of 5"><i class="f"></i><i class="f"></i><i class="f"></i><i class="f"></i><i></i></span></td></tr>
+        <tr><th>Noticeboard</th><td><span class="dots" aria-label="3 of 5"><i class="f"></i><i class="f"></i><i class="f"></i><i></i><i></i></span></td><td><span class="dots" aria-label="3 of 5"><i class="f"></i><i class="f"></i><i class="f"></i><i></i><i></i></span></td><td><span class="dots" aria-label="2 of 5"><i class="f"></i><i class="f"></i><i></i><i></i><i></i></span></td><td><span class="dots" aria-label="3 of 5"><i class="f"></i><i class="f"></i><i class="f"></i><i></i><i></i></span></td><td><span class="dots" aria-label="5 of 5"><i class="f"></i><i class="f"></i><i class="f"></i><i class="f"></i><i class="f"></i></span></td><td><span class="dots" aria-label="3 of 5"><i class="f"></i><i class="f"></i><i class="f"></i><i></i><i></i></span></td><td><span class="dots" aria-label="4 of 5"><i class="f"></i><i class="f"></i><i class="f"></i><i class="f"></i><i></i></span></td><td><span class="dots" aria-label="3 of 5"><i class="f"></i><i class="f"></i><i class="f"></i><i></i><i></i></span></td></tr>
+        <tr><th>Text Me a Link</th><td><span class="dots" aria-label="4 of 5"><i class="f"></i><i class="f"></i><i class="f"></i><i class="f"></i><i></i></span></td><td><span class="dots" aria-label="1 of 5"><i class="f"></i><i></i><i></i><i></i><i></i></span></td><td><span class="dots" aria-label="2 of 5"><i class="f"></i><i class="f"></i><i></i><i></i><i></i></span></td><td><span class="dots" aria-label="2 of 5"><i class="f"></i><i class="f"></i><i></i><i></i><i></i></span></td><td><span class="dots" aria-label="3 of 5"><i class="f"></i><i class="f"></i><i class="f"></i><i></i><i></i></span></td><td><span class="dots" aria-label="4 of 5"><i class="f"></i><i class="f"></i><i class="f"></i><i class="f"></i><i></i></span></td><td><span class="dots" aria-label="4 of 5"><i class="f"></i><i class="f"></i><i class="f"></i><i class="f"></i><i></i></span></td><td><span class="dots" aria-label="4 of 5"><i class="f"></i><i class="f"></i><i class="f"></i><i class="f"></i><i></i></span></td></tr>
+        <tr><th>Crew Club</th><td><span class="dots" aria-label="3 of 5"><i class="f"></i><i class="f"></i><i class="f"></i><i></i><i></i></span></td><td><span class="dots" aria-label="4 of 5"><i class="f"></i><i class="f"></i><i class="f"></i><i class="f"></i><i></i></span></td><td><span class="dots" aria-label="5 of 5"><i class="f"></i><i class="f"></i><i class="f"></i><i class="f"></i><i class="f"></i></span></td><td><span class="dots" aria-label="4 of 5"><i class="f"></i><i class="f"></i><i class="f"></i><i class="f"></i><i></i></span></td><td><span class="dots" aria-label="5 of 5"><i class="f"></i><i class="f"></i><i class="f"></i><i class="f"></i><i class="f"></i></span></td><td><span class="dots" aria-label="3 of 5"><i class="f"></i><i class="f"></i><i class="f"></i><i></i><i></i></span></td><td><span class="dots" aria-label="1 of 5"><i class="f"></i><i></i><i></i><i></i><i></i></span></td><td><span class="dots" aria-label="1 of 5"><i class="f"></i><i></i><i></i><i></i><i></i></span></td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p class="note">No supplier has been priced or trialled yet. Cost and speed are relative to each other, not dollar figures.</p>
+</section>
+
+<section id="pick">
+  <div class="sec-head">
+    <span class="label">Where we'd start</span>
+    <h2>Our pick: blend the best three, then grow</h2>
+  </div>
+  <div class="rec">
+    <h3>Ask three questions, show the noticeboard, <em>confirm by text.</em></h3>
+    <p class="why">No single idea wins on its own. The front door from Idea 2 gets Margaret in. The photo cards from Idea 3 let everyone else browse. The messages and password-free link from Idea 4 keep her informed and get her back in. Build that as our own lean web app, so we keep control of the sign-in and of where details are stored, then add the map and the club once the basics are proven.</p>
+    <div class="phases">
+      <div><b>Phase 1: the basics, done beautifully</b><span>Three questions, photo cards, password-free sign-up, reminders, a live roster and messaging for the team. Pilot at one smaller Running Wild event.</span></div>
+      <div><b>Phase 2: the map and race day</b><span>Trail Map view for the big multi-location events, race-day check-in, printable rosters and reporting.</span></div>
+      <div><b>Phase 3: the Crew Club</b><span>Passport stamps, rewards, team sign-ups and one-tap sign-up for regulars.</span></div>
+    </div>
+    <p class="why">Before committing to a build, spend a fortnight putting two or three off-the-shelf products through the Margaret test. If one passes with password-free sign-up and Australian data storage, buying could beat building for Phase 1.</p>
+  </div>
+</section>
+
+<section id="open">
+  <div class="sec-head">
+    <span class="label">To confirm before this goes further</span>
+    <h2>Open items</h2>
+  </div>
+  <div class="scroll">
+    <table>
+      <thead><tr><th>Item</th><th>Why it matters</th><th>Owner</th></tr></thead>
+      <tbody>
+        <tr><td>How many volunteers per event and per year</td><td>Sets subscription and text costs, and how much rostering help the team needs</td><td>CONFIRM</td></tr>
+        <tr><td>Budget and who builds and maintains it</td><td>Decides between the low-code, bought and custom routes</td><td>CONFIRM</td></tr>
+        <tr><td>What the website and runner rego run on</td><td>Shapes Idea 4 and the later link to runner credits</td><td>CONFIRM</td></tr>
+        <tr><td>Volunteer rewards policy</td><td>The Crew Club needs clear, consistent rewards across all events</td><td>CONFIRM</td></tr>
+        <tr><td>What to bring across from iVolunteer</td><td>Past volunteers, history and consent to contact them from the new platform</td><td>CONFIRM</td></tr>
+        <tr><td>Minimum age and family sign-ups</td><td>Changes what the sign-up asks and how groups are handled</td><td>CONFIRM</td></tr>
+        <tr><td>Which event is the pilot, and when</td><td>Sets the deadline for Phase 1</td><td>CONFIRM</td></tr>
+        <tr><td>Privacy page and data retention period</td><td>Needs a named owner and a plain-English policy before launch</td><td>CONFIRM</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="split">
+    <div>
+      <h3>Next steps</h3>
+      <ul class="plain">
+        <li>Agree the scope and the Margaret test with the Event Management Team.</li>
+        <li>Print the five sketches and put them in front of five real volunteers, at least two of them over 65.</li>
+        <li>Run the off-the-shelf check and choose the build route.</li>
+        <li>Lock in the pilot event and work back from its date.</li>
+      </ul>
+    </div>
+    <div>
+      <h3>Version history</h3>
+      <ul class="plain">
+        <li>v0.1, 11 November 2026: first draft of scope and five platform ideas for discussion.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+</main>
