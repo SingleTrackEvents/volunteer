@@ -1,0 +1,304 @@
+<title>Crew Sign-up Prototype</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600;700&family=Barlow+Condensed:wght@600;700;800&display=swap">
+<style>
+/* Layout: one phone-width column, one question per screen, a charcoal top bar with a
+   switch between what the volunteer sees and what the team sees. Type is big on purpose. */
+:root {
+  --bg: #F4F7F6; --panel: #FFFFFF; --ink: #1F2A2E; --slate: #56666B; --rule: #CFD9D8;
+  --teal: #40CFBF; --teal-ink: #0B6F66; --on-teal: #12322F;
+  --coral: #F26B4E; --coral-ink: #B8401F; --coral-soft: #FDE9E3;
+  --band: #1F2A2E; --band-ink: #F4F7F6; --band-soft: #A9B8BB; --teal-soft: #DDF5F1;
+  --display: "Barlow Condensed", "Arial Narrow", "Helvetica Neue", Arial, sans-serif;
+  --body: "Barlow", "Helvetica Neue", Arial, sans-serif;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #131A1D; --panel: #1B2529; --ink: #E9EFEE; --slate: #A3B3B6; --rule: #33434A;
+    --teal-ink: #5FE0D1; --coral-ink: #FF9279; --coral-soft: #3A221C; --band: #0D1315; --teal-soft: #17332F;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #131A1D; --panel: #1B2529; --ink: #E9EFEE; --slate: #A3B3B6; --rule: #33434A;
+  --teal-ink: #5FE0D1; --coral-ink: #FF9279; --coral-soft: #3A221C; --band: #0D1315; --teal-soft: #17332F;
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+body { background: var(--bg); color: var(--ink); font-family: var(--body); font-size: 18px; line-height: 1.45; }
+.gut { padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
+h1, h2, h3 { font-family: var(--display); text-transform: uppercase; line-height: 1.03; margin: 0; text-wrap: balance; letter-spacing: 0.01em; }
+p { margin: 0; }
+button { font: inherit; color: inherit; cursor: pointer; }
+button:focus-visible, input:focus-visible, a:focus-visible { outline: 3px solid var(--teal); outline-offset: 2px; }
+
+.bar { background: var(--band); color: var(--band-ink); }
+.bar .gut { max-width: 800px; margin: 0 auto; padding-block: 12px; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 10px 16px; }
+.brand { font-family: var(--display); font-weight: 800; text-transform: uppercase; font-size: 22px; letter-spacing: 0.04em; display: flex; align-items: center; gap: 10px; }
+.tag { display: inline-block; background: var(--teal); color: var(--on-teal); transform: skewX(-12deg); padding: 1px 10px; font-size: 13px; letter-spacing: 0.08em; font-weight: 700; }
+.tag > span { display: inline-block; transform: skewX(12deg); }
+.switch { display: flex; border: 2px solid var(--band-soft); border-radius: 99px; padding: 2px; }
+.switch button { background: none; border: 0; border-radius: 99px; padding: 6px 14px; font-size: 15px; font-weight: 600; color: var(--band-ink); }
+.switch button[aria-pressed="true"] { background: var(--teal); color: var(--on-teal); }
+
+main { max-width: 500px; margin: 0 auto; padding-block: 26px 20px; display: flex; flex-direction: column; gap: 18px; }
+main.wide { max-width: 800px; }
+.step { display: flex; justify-content: space-between; align-items: center; font-size: 15px; color: var(--slate); font-weight: 600; min-height: 30px; }
+.back { background: none; border: 0; padding: 4px 0; font-weight: 700; color: var(--teal-ink); font-size: 17px; }
+h1 { font-size: clamp(40px, 11vw, 56px); font-weight: 800; }
+h1 em { font-style: normal; color: var(--teal-ink); }
+h2 { font-size: clamp(32px, 9vw, 42px); font-weight: 800; }
+.sub { color: var(--slate); }
+.choices { display: flex; flex-direction: column; gap: 12px; }
+.big { display: block; width: 100%; text-align: left; background: var(--panel); border: 2px solid var(--rule); border-radius: 14px; padding: 18px 18px; font-size: 20px; font-weight: 600; line-height: 1.25; }
+.big small { display: block; font-size: 15.5px; font-weight: 400; color: var(--slate); margin-top: 3px; }
+.big:hover { border-color: var(--teal-ink); }
+.go { display: block; width: 100%; background: var(--teal); color: var(--on-teal); border: 0; border-radius: 14px; padding: 17px 16px; font-size: 20px; font-weight: 700; text-align: center; }
+.go:hover { filter: brightness(1.06); }
+.plainbtn { background: none; border: 2px solid var(--rule); border-radius: 14px; padding: 14px 16px; font-size: 18px; font-weight: 600; width: 100%; }
+.help { text-align: center; color: var(--slate); font-size: 16px; border-top: 1px solid var(--rule); padding-top: 16px; }
+.help b { color: var(--ink); white-space: nowrap; }
+.event { background: var(--panel); border: 1px solid var(--rule); border-radius: 14px; padding: 14px 16px; display: flex; flex-direction: column; gap: 2px; }
+.event b { font-family: var(--display); text-transform: uppercase; font-size: 22px; letter-spacing: 0.02em; }
+label { font-weight: 700; display: block; }
+.field { display: flex; flex-direction: column; gap: 5px; }
+.field .why { font-size: 15.5px; color: var(--slate); }
+input[type="text"], input[type="tel"] { font: inherit; font-size: 20px; padding: 14px 14px; border: 2px solid var(--rule); border-radius: 12px; background: var(--panel); color: var(--ink); width: 100%; }
+.err { background: var(--coral-soft); color: var(--coral-ink); border-radius: 10px; padding: 10px 14px; font-weight: 600; }
+
+.crew { background: var(--panel); border: 1px solid var(--rule); border-radius: 16px; padding: 18px; display: flex; flex-direction: column; gap: 12px; }
+.who { display: flex; gap: 14px; align-items: center; }
+.av { flex: none; width: 64px; height: 64px; border-radius: 50%; background: var(--teal); color: var(--on-teal); display: grid; place-items: center; font-family: var(--display); font-weight: 800; font-size: 34px; }
+.crew h3 { font-size: 28px; font-weight: 800; }
+.role { color: var(--slate); font-size: 15.5px; }
+.hello { font-style: italic; }
+.facts { margin: 0; display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 4px 14px; font-size: 16.5px; }
+.facts dt { color: var(--slate); font-weight: 600; }
+.facts dd { margin: 0; }
+.see { background: var(--teal-soft); border-radius: 10px; padding: 10px 14px; font-weight: 600; }
+.left { color: var(--coral-ink); font-weight: 700; }
+.txt { background: var(--panel); border: 1px solid var(--rule); border-radius: 18px 18px 18px 4px; padding: 12px 16px; font-size: 16.5px; }
+.cap { font-size: 13px; text-transform: uppercase; letter-spacing: 0.1em; font-weight: 600; color: var(--slate); }
+
+/* Team view */
+.sum { display: flex; flex-wrap: wrap; gap: 8px 30px; }
+.sum div { display: flex; flex-direction: column; }
+.sum b { font-family: var(--display); font-size: 40px; line-height: 1; font-weight: 800; }
+.sum span { color: var(--slate); font-size: 15px; }
+.rost { background: var(--panel); border: 1px solid var(--rule); border-radius: 14px; padding: 16px; display: flex; flex-direction: column; gap: 10px; }
+.rhead { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 6px 14px; align-items: baseline; }
+.rhead h3 { font-size: 24px; font-weight: 700; }
+.pill { font-size: 14px; font-weight: 700; padding: 3px 12px; border-radius: 99px; border: 2px solid var(--rule); white-space: nowrap; }
+.pill.need { background: var(--coral-soft); color: var(--coral-ink); border-color: var(--coral-ink); }
+.pill.ok { background: var(--teal-soft); color: var(--teal-ink); border-color: var(--teal-ink); }
+.meter { height: 12px; background: var(--rule); border-radius: 12px; overflow: hidden; }
+.meter i { display: block; height: 100%; background: var(--teal-ink); }
+.names { display: flex; flex-wrap: wrap; gap: 6px; font-size: 15px; }
+.names span { border: 1px solid var(--rule); border-radius: 99px; padding: 2px 10px; }
+.names .new { background: var(--teal); color: var(--on-teal); border-color: var(--teal); font-weight: 700; }
+.names .gap { border-style: dashed; color: var(--slate); }
+.ract { display: flex; flex-wrap: wrap; gap: 8px; }
+.ract button { background: none; border: 2px solid var(--rule); border-radius: 10px; padding: 7px 14px; font-size: 15.5px; font-weight: 600; }
+.ract button:hover { border-color: var(--teal-ink); }
+.toast { position: fixed; left: 50%; bottom: calc(18px + env(safe-area-inset-bottom, 0px)); transform: translateX(-50%); background: var(--band); color: var(--band-ink); padding: 12px 18px; border-radius: 12px; font-size: 16px; max-width: min(92vw, 460px); text-align: center; border: 1px solid var(--band-soft); }
+.foot { max-width: 800px; margin: 0 auto; padding-block: 8px 40px; color: var(--slate); font-size: 14.5px; text-align: center; }
+</style>
+
+<div class="bar"><div class="gut">
+  <div class="brand">SingleTrack Crew <span class="tag"><span>Example</span></span></div>
+  <div class="switch" role="group" aria-label="Choose a view">
+    <button type="button" id="view-vol" data-act="view" data-v="vol" aria-pressed="true">Volunteer view</button>
+    <button type="button" id="view-team" data-act="view" data-v="team" aria-pressed="false">Team view</button>
+  </div>
+</div></div>
+
+<div class="gut"><main id="app"></main></div>
+<p class="foot gut">Example page for Phase 1. The event, jobs, names and times are made up for the demo. Nothing you type is saved or sent. Real crew photos replace the initials.</p>
+<div id="toast" class="toast" role="status" aria-live="polite" hidden></div>
+
+<script>
+const pool = ['Anh','Bev','Carlos','Dot','Emre','Fiona','Gus','Hana','Ian','Jude','Kev','Lena','Mick','Nadia','Ollie','Priya','Quinn','Rosa','Stu','Tess','Uma','Vic','Wen','Xavier','Yasmin','Zoe','Arlo','Bronte','Col','Dee'];
+let pi = 0;
+const take = n => Array.from({ length: n }, () => pool[pi++ % pool.length]);
+const crews = [
+  { id: 'half', lead: 'Jo', role: 'Aid Station Manager', job: 'Hand out drinks and cheers at the halfway aid station', place: 'Halfway aid station, 25 minutes drive from the village', time: '7am to 12pm', period: 'am', styles: ['feet', 'chat'], need: 8, have: 3,
+    perks: 'Marquee, chairs, a toilet and a kettle', hello: "We're the party at the halfway mark. Bring your loudest cheer. I need five more mates.",
+    sees: { long: 'around 10am', short: 'around 8.30am' } },
+  { id: 'medals', lead: 'Deb', role: 'Crew contact', job: 'Hang finish medals around tired necks', place: 'Finish line, event village', time: '9am to 1pm', period: 'am', styles: ['sit', 'chat'], need: 6, have: 4,
+    perks: 'Chairs, shade and coffee close by', hello: "Best job at the event. Every single runner is happy to see you. Chairs for anyone who wants one.", finish: true },
+  { id: 'desk', lead: 'Raj', role: 'Crew contact', job: 'Welcome runners and hand out race bibs', place: 'Welcome desk, event village', time: '6am to 9am', period: 'am', styles: ['sit', 'chat'], need: 5, have: 4,
+    perks: 'Seated, under cover, done by 9am', hello: "Early start, early finish. You'll be the first friendly face runners see, then you're free for the day." },
+  { id: 'creek', lead: 'Sam', role: 'Course Marshal contact', job: 'Point runners the right way at the creek crossing', place: 'Creek crossing, 10 minutes walk from the car park', time: '7.30am to 11.30am', period: 'am', styles: ['feet', 'quiet'], need: 4, have: 2,
+    perks: 'You work in a pair. Bring a camp chair', hello: "A peaceful spot by the water with a mate. Runners will thank you all morning.",
+    sees: { long: 'around 9am' } },
+  { id: 'fruit', lead: 'Mel', role: 'Crew contact', job: 'Hand out fruit and cheer runners home', place: 'Finish chute, event village', time: '10am to 2pm', period: 'pm', styles: ['feet', 'chat'], need: 6, have: 5,
+    perks: 'Shade, music and all the watermelon you can eat', hello: "We make the noise at the finish. Cowbells supplied.", finish: true },
+  { id: 'park', lead: 'Pete', role: 'Crew contact', job: 'Wave cars into the car park', place: 'Main car park, event village', time: '12pm to 3pm', period: 'pm', styles: ['feet', 'quiet'], need: 4, have: 1,
+    perks: 'Hi-vis vest supplied, lunch included', hello: "Simple job, big difference. Help everyone get home smoothly and lunch is on us." }
+];
+crews.forEach(c => c.people = take(c.have));
+
+const S = { view: 'vol', step: 'home', runner: null, when: null, style: null, pick: null, me: null, err: '', asked: false };
+const app = document.getElementById('app');
+const esc = s => String(s).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+const byId = id => crews.find(c => c.id === id);
+const spots = c => c.need - c.people.length - (S.me && S.me.crew === c.id ? 1 : 0);
+const help = '<p class="help">Rather talk to a person? Ring us on <b>[phone]</b> and we will sign you up.</p>';
+const stepBar = (n, back) => `<div class="step"><button class="back" type="button" data-act="go" data-s="${back}">&larr; Back</button><span>Step ${n} of 5</span></div>`;
+const big = (act, val, title, small) => `<button class="big" type="button" data-act="${act}" data-val="${val}">${title}${small ? `<small>${small}</small>` : ''}</button>`;
+
+function seeLine(c) {
+  if (!S.runner) return '';
+  const who = esc(S.runner.name || 'your runner');
+  if (c.finish) return `<p class="see">You will be at the finish when ${who} comes in.</p>`;
+  const t = c.sees && c.sees[S.runner.race];
+  return t ? `<p class="see">You will see ${who} come through ${t}. That is our best guess. Runners have their own ideas.</p>` : '';
+}
+function card(c) {
+  const n = spots(c), mine = S.me && S.me.crew === c.id;
+  return `<article class="crew">
+    <div class="who"><span class="av" aria-hidden="true">${c.lead[0]}</span><div><h3>Join ${c.lead}'s crew</h3><p class="role">${c.lead}, ${c.role}</p></div></div>
+    <p class="hello">&ldquo;${c.hello}&rdquo;</p>
+    <dl class="facts"><dt>The job</dt><dd>${c.job}</dd><dt>When</dt><dd>Saturday, ${c.time}</dd><dt>Where</dt><dd>${c.place}</dd><dt>Good to know</dt><dd>${c.perks}</dd></dl>
+    ${seeLine(c)}
+    ${mine ? '<p class="see">This is your crew.</p>' : n > 0 ? `<p class="left">${n} ${n === 1 ? 'spot' : 'spots'} left</p><button class="go" type="button" data-act="pick" data-val="${c.id}">I'm with ${c.lead}</button>` : '<p class="left">This crew is full</p>'}
+  </article>`;
+}
+function matches() {
+  const score = c => {
+    let s = (c.need - c.people.length) / c.need * 2;
+    if (S.when && S.when !== 'any' && c.period === S.when) s += 4;
+    if (S.style && S.style !== 'any' && c.styles.includes(S.style)) s += 3;
+    if (S.style === 'any') s += (c.need - c.people.length) / c.need * 3;
+    if (S.runner && (c.finish || (c.sees && c.sees[S.runner.race]))) s += 2;
+    return s;
+  };
+  return crews.filter(c => spots(c) > 0).sort((a, b) => score(b) - score(a)).slice(0, 3);
+}
+
+const screens = {
+  home: () => `
+    <h1>Put your hand up. <em>We'll do the rest.</em></h1>
+    <div class="event"><span class="cap">Volunteering at</span><b>Running Wild pilot event</b><span class="sub">Saturday. Six crews are looking for helpers.</span></div>
+    <p>Answer three easy questions and we will find you a crew. It takes about two minutes and there is no password.</p>
+    <button class="go" type="button" data-act="go" data-s="who">Find me a crew</button>
+    <button class="plainbtn" type="button" data-act="go" data-s="all">Show me all the crews first</button>
+    ${help}`,
+  who: () => `${stepBar(1, 'home')}
+    <h2>Who are you here for?</h2>
+    <p class="sub">If someone you know is running, we can find you a job where you will see them go past.</p>
+    <div class="choices">
+      ${big('who', 'yes', 'A runner I know', 'A grandchild, a partner, a mate')}
+      ${big('who', 'no', 'Nobody, I just want to help')}
+    </div>${help}`,
+  race: () => `${stepBar(1, 'who')}
+    <h2>Which race are they in?</h2>
+    <div class="field"><label for="runner-name">Their first name</label><input type="text" id="runner-name" autocomplete="off" placeholder="Tom" value="${esc(S.runner && S.runner.name || '')}"><span class="why">Only so we can say when to look out for them. We do not keep it.</span></div>
+    <div class="choices">
+      ${big('race', 'long', 'The long course')}
+      ${big('race', 'short', 'The short course')}
+      ${big('race', 'unsure', "I'm not sure")}
+    </div>${help}`,
+  when: () => `${stepBar(2, 'who')}
+    <h2>When are you free on Saturday?</h2>
+    <div class="choices">
+      ${big('when', 'am', 'Morning', 'Starts between 6am and 9am')}
+      ${big('when', 'pm', 'Middle of the day', 'Starts between 10am and 12pm')}
+      ${big('when', 'any', 'Any time, I am yours')}
+    </div>${help}`,
+  style: () => `${stepBar(3, 'when')}
+    <h2>What sort of job sounds good?</h2>
+    <div class="choices">
+      ${big('style', 'sit', 'Sitting down is best')}
+      ${big('style', 'feet', 'On my feet, in the action')}
+      ${big('style', 'chat', 'Chatting with runners')}
+      ${big('style', 'quiet', 'Somewhere quiet in the bush')}
+      ${big('style', 'any', 'Put me where I am needed most')}
+    </div>${help}`,
+  matches: () => `${stepBar(4, 'style')}
+    <h2>Pick your crew</h2>
+    <p class="sub">These three suit you best. Each crew has a person who looks after you on the day.</p>
+    ${matches().map(card).join('')}
+    <button class="plainbtn" type="button" data-act="go" data-s="all">Show me all the crews</button>${help}`,
+  all: () => `<div class="step"><button class="back" type="button" data-act="go" data-s="${S.me ? 'done' : S.style ? 'matches' : 'home'}">&larr; Back</button><span>All six crews</span></div>
+    <h2>${S.me ? 'Swap to another crew' : 'Every crew, every job'}</h2>
+    ${crews.map(card).join('')}${help}`,
+  details: () => { const c = byId(S.pick); return `${stepBar(5, 'matches')}
+    <h2>Nearly there. Who are you?</h2>
+    <p class="sub">You are joining ${c.lead}'s crew: ${c.job.toLowerCase()}, Saturday ${c.time}.</p>
+    ${S.err ? `<p class="err" role="alert">${S.err}</p>` : ''}
+    <div class="field"><label for="first-name">Your first name</label><input type="text" id="first-name" autocomplete="given-name" placeholder="Margaret"><span class="why">So ${c.lead} knows what to call you.</span></div>
+    <div class="field"><label for="mobile">Your mobile number</label><input type="tel" id="mobile" autocomplete="tel" placeholder="04"><span class="why">We text your details and a reminder. This is also how you get back in. No password.</span></div>
+    <div class="field"><label for="ec">Someone we can ring for you on the day</label><input type="text" id="ec" autocomplete="off" placeholder="Name and number"><span class="why">Only used if you need help. You can add this later.</span></div>
+    <button class="go" type="button" data-act="join">Count me in</button>${help}`; },
+  done: () => { const c = byId(S.me.crew), n = esc(S.me.name); return `
+    <h1>You're in, <em>${n}!</em></h1>
+    <article class="crew">
+      <div class="who"><span class="av" aria-hidden="true">${c.lead[0]}</span><div><h3>${c.lead}'s crew</h3><p class="role">${c.lead} is your contact on the day</p></div></div>
+      <dl class="facts"><dt>The job</dt><dd>${c.job}</dd><dt>When</dt><dd>Saturday, ${c.time}</dd><dt>Where</dt><dd>${c.place}</dd><dt>Bring</dt><dd>Hat, water bottle, a warm layer and a smile</dd></dl>
+      ${seeLine(c)}
+    </article>
+    <p class="cap">The text we send you</p>
+    <p class="txt">SingleTrack: Hi ${n}, you're in! ${c.lead}'s crew, Saturday ${c.time}, ${c.place.split(',')[0]}. We will text a reminder the day before. Need to change? Reply SWAP or ring [phone].</p>
+    ${S.asked ? `<p class="err">Sure you can't make it? ${c.lead} will miss you, but no hard feelings.</p><button class="go" type="button" data-act="leave">Yes, take me off the crew</button><button class="plainbtn" type="button" data-act="keep">No, I'm still coming</button>`
+      : `<button class="plainbtn" type="button" data-act="go" data-s="all">Swap to a different crew</button><button class="plainbtn" type="button" data-act="ask">I can't make it any more</button>`}
+    <button class="go" type="button" data-act="view" data-v="team">See what the team sees</button>${help}`; },
+  gone: () => `<h2>No worries. You're off the crew.</h2><p>Thanks for letting us know early. It gives us time to find someone else. We would love to see you at the next one.</p>
+    <button class="go" type="button" data-act="go" data-s="home">Start again</button>${help}`
+};
+
+function team() {
+  const list = crews.map(c => ({ c, names: c.people.slice(), mine: S.me && S.me.crew === c.id }));
+  list.forEach(r => { if (r.mine) r.names.push(S.me.name); });
+  const filled = list.reduce((a, r) => a + r.names.length, 0), need = crews.reduce((a, c) => a + c.need, 0);
+  const short = list.filter(r => r.c.need - r.names.length >= 2).length;
+  list.sort((a, b) => (b.c.need - b.names.length) / b.c.need - (a.c.need - a.names.length) / a.c.need);
+  return `<h2>Saturday roster</h2>
+    <div class="sum"><div><b>${filled} of ${need}</b><span>spots filled</span></div><div><b>${short}</b><span>crews need help</span></div><div><b>${S.me ? 1 : 0}</b><span>new today</span></div></div>
+    <p class="sub">Crews with the biggest gaps sit at the top. Sign up in the volunteer view and watch the new name land here.</p>
+    <div class="ract"><button type="button" data-act="toast" data-val="In the real thing, a team member types in a name and mobile while the volunteer is on the phone.">Add a volunteer by phone</button><button type="button" data-act="toast" data-val="In the real thing, this prints a roster for every crew as a backup for race day.">Print rosters</button></div>
+    ${list.map(({ c, names, mine }) => { const gap = c.need - names.length; return `<div class="rost">
+      <div class="rhead"><h3>${c.lead}'s crew</h3><span class="pill ${gap >= 2 ? 'need' : 'ok'}">${gap === 0 ? 'Full' : gap >= 2 ? 'Needs ' + gap : 'Needs 1'}</span></div>
+      <p class="sub">${c.job}. Saturday ${c.time}.</p>
+      <div class="meter" role="img" aria-label="${names.length} of ${c.need} filled"><i style="width:${names.length / c.need * 100}%"></i></div>
+      <div class="names">${names.map((n, i) => `<span class="${mine && i === names.length - 1 ? 'new' : ''}">${esc(n)}${mine && i === names.length - 1 ? ' (new)' : ''}</span>`).join('')}${Array.from({ length: gap }, () => '<span class="gap">open</span>').join('')}</div>
+      <div class="ract"><button type="button" data-act="toast" data-val="In the real thing, this sends a text and an email to everyone on ${c.lead}'s crew.">Message this crew</button>${gap >= 2 ? `<button type="button" data-act="toast" data-val="In the real thing, this asks past volunteers if they can help fill ${c.lead}'s crew.">Ask past volunteers</button>` : ''}</div>
+    </div>`; }).join('')}`;
+}
+
+function render(focus) {
+  app.className = S.view === 'team' ? 'wide' : '';
+  app.innerHTML = S.view === 'team' ? team() : screens[S.step]();
+  document.getElementById('view-vol').setAttribute('aria-pressed', S.view === 'vol');
+  document.getElementById('view-team').setAttribute('aria-pressed', S.view === 'team');
+  if (focus) { window.scrollTo(0, 0); const h = app.querySelector('h1, h2'); if (h) { h.tabIndex = -1; h.focus({ preventScroll: true }); h.style.outline = 'none'; } }
+}
+let tt;
+function toast(msg) { const t = document.getElementById('toast'); t.textContent = msg; t.hidden = false; clearTimeout(tt); tt = setTimeout(() => { t.hidden = true; }, 4200); }
+
+document.addEventListener('click', e => {
+  const b = e.target.closest('[data-act]'); if (!b) return;
+  const a = b.dataset.act, v = b.dataset.val;
+  S.err = '';
+  if (a === 'view') S.view = b.dataset.v;
+  else if (a === 'go') { S.step = b.dataset.s; S.asked = false; }
+  else if (a === 'who') { if (v === 'yes') S.step = 'race'; else { S.runner = null; S.step = 'when'; } }
+  else if (a === 'race') { const n = document.getElementById('runner-name').value.trim(); S.runner = { name: n, race: v === 'unsure' ? 'long' : v }; S.step = 'when'; }
+  else if (a === 'when') { S.when = v; S.step = 'style'; }
+  else if (a === 'style') { S.style = v; S.step = 'matches'; }
+  else if (a === 'pick') { if (S.me) { S.me.crew = v; S.step = 'done'; toast('Swapped. ' + byId(v).lead + ' knows you are coming.'); } else { S.pick = v; S.step = 'details'; } }
+  else if (a === 'join') {
+    const n = document.getElementById('first-name').value.trim(), m = document.getElementById('mobile').value.replace(/\s/g, '');
+    if (!n) { S.err = 'Please tell us your first name.'; }
+    else if (!/^\+?\d{8,12}$/.test(m)) { S.err = 'That mobile number does not look right. It should be 10 digits, starting with 04.'; }
+    else { S.me = { name: n, crew: S.pick }; S.step = 'done'; }
+    if (S.err) { const keep = [n, document.getElementById('mobile').value, document.getElementById('ec').value]; render(true); ['first-name', 'mobile', 'ec'].forEach((id, i) => { document.getElementById(id).value = keep[i]; }); return; }
+  }
+  else if (a === 'ask') S.asked = true;
+  else if (a === 'keep') S.asked = false;
+  else if (a === 'leave') { S.me = null; S.asked = false; S.pick = null; S.step = 'gone'; }
+  else if (a === 'toast') { toast(v); return; }
+  render(true);
+});
+render(false);
+</script>
