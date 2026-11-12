@@ -177,6 +177,20 @@ tbody th { font-family: var(--display); text-transform: uppercase; font-size: 20
 .dots i.f { background: var(--teal-ink); border-color: var(--teal-ink); }
 .note { color: var(--slate); font-size: 15px; margin-top: 12px; }
 
+/* Left-field ideas, ranked */
+.wild { display: grid; grid-template-columns: 96px minmax(0, 1fr); gap: 10px 28px; padding-block: 36px; border-top: 1px solid var(--rule); align-items: start; }
+.wild:first-of-type { border-top: 3px solid var(--ink); }
+.rank { font-family: var(--display); font-weight: 800; font-size: 88px; line-height: 0.85; color: var(--teal-ink); display: flex; flex-direction: column; gap: 8px; }
+.rank small { font-family: var(--body); font-size: 12px; letter-spacing: 0.1em; font-weight: 600; text-transform: uppercase; color: var(--slate); line-height: 1.2; }
+.pips { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; }
+.pip { width: 38px; border: 1.5px solid var(--rule); display: flex; flex-direction: column; align-items: center; font-size: 12px; font-weight: 600; color: var(--slate); padding: 3px 0 2px; line-height: 1.2; }
+.pip b { font-size: 16px; }
+.pip.p { border-color: var(--teal-ink); } .pip.p b { color: var(--teal-ink); }
+.pip.f { border-color: var(--coral-ink); } .pip.f b { color: var(--coral-ink); }
+.score { font-family: var(--display); font-weight: 700; font-size: 22px; text-transform: uppercase; margin-left: 8px; }
+.key { display: flex; flex-wrap: wrap; gap: 6px 22px; color: var(--slate); font-size: 15px; }
+@media (max-width: 860px) { .wild { grid-template-columns: minmax(0, 1fr); } .rank { font-size: 60px; flex-direction: row; align-items: baseline; gap: 12px; } }
+
 /* Recommendation */
 .rec { background: var(--band); color: var(--band-ink); padding: 30px 28px; display: flex; flex-direction: column; gap: 18px; }
 .rec h3 { font-size: clamp(28px, 4vw, 40px); font-weight: 800; }
@@ -202,7 +216,7 @@ tbody th { font-family: var(--display); text-transform: uppercase; font-size: 20
     <h1>Put your hand up. <em>We'll do the rest.</em></h1>
     <p class="lede">A scope for a new SingleTrack volunteer rego platform to replace iVolunteer, with five ways we could build it. Every idea has been walked through by Margaret, who is 70, loves a chat and does not love passwords.</p>
     <dl class="meta">
-      <div><dt>Version</dt><dd>0.2 draft</dd></div>
+      <div><dt>Version</dt><dd>0.3 draft</dd></div>
       <div><dt>Issued</dt><dd>12 November 2026</dd></div>
       <div><dt>Owner</dt><dd>Operations Manager</dd></div>
       <div><dt>Covers</dt><dd>The whole volunteer journey</dd></div>
@@ -212,6 +226,7 @@ tbody th { font-family: var(--display); text-transform: uppercase; font-size: 20
       <a href="#scope">The scope</a>
       <a href="#ideas">Five ideas</a>
       <a href="#scorecard">Scorecard</a>
+      <a href="#left-field">Five from left field</a>
       <a href="#pick">Our pick</a>
       <a href="#open">Decisions</a>
     </nav>
@@ -598,6 +613,162 @@ tbody th { font-family: var(--display); text-transform: uppercase; font-size: 20
   <p class="note">No supplier has been priced or trialled yet. Cost and speed are relative to each other, not dollar figures.</p>
 </section>
 
+<section id="left-field">
+  <div class="sec-head">
+    <span class="label">Round two, off the beaten track</span>
+    <h2>Five from left field, ranked by Margaret</h2>
+    <p class="prose">The first five ideas all start with a list of jobs. These five start somewhere else: with a person, a runner, a poster, a phone call or a race bib. Each one has been put through the eight-point Margaret test and ranked from best to worst.</p>
+    <p class="key"><span><b>&#10003;</b> passes</span><span><b>~</b> partly</span><span><b>&#10007;</b> fails</span><span>Numbers match the Margaret test at the top of the page.</span></p>
+  </div>
+
+  <article class="wild" id="join-a-crew">
+    <div class="rank"><small>Best</small>1</div>
+    <div class="idea-body">
+      <div class="idea-head">
+        <h3>Join Deb's Crew</h3>
+        <p class="prose">You don't pick a job. You pick a person. Every aid station and crew has a face: the Aid Station Manager, with a photo and a short hello in their own words. "I'm Deb. I run the aid station at the top of the hill. We have a kettle, a marquee and a good laugh. I need six mates for Saturday morning." Tap "I'm with Deb". Deb sees her crew fill up and welcomes each person herself. Deb is an example name.</p>
+      </div>
+      <div class="pips" aria-label="Margaret test: 8 of 8">
+        <span class="pip p">1<b>&#10003;</b></span><span class="pip p">2<b>&#10003;</b></span><span class="pip p">3<b>&#10003;</b></span><span class="pip p">4<b>&#10003;</b></span><span class="pip p">5<b>&#10003;</b></span><span class="pip p">6<b>&#10003;</b></span><span class="pip p">7<b>&#10003;</b></span><span class="pip p">8<b>&#10003;</b></span>
+        <span class="score">8 of 8</span>
+      </div>
+      <div class="pc">
+        <div class="pros"><h4>What works</h4><ul>
+          <li>People volunteer for people. A friendly face beats a job description every time.</li>
+          <li>The human on every screen is built in. Her contact on the day is the person she signed up with.</li>
+          <li>Aid Station Managers recruit and look after their own crews, which takes work off the Operations Manager.</li>
+          <li>Crews come back together year after year, because they are a crew.</li>
+        </ul></div>
+        <div class="cons"><h4>What trips it up</h4><ul>
+          <li>It can become a popularity contest. The big personalities fill first.</li>
+          <li>Aid Station Managers must be locked in early and be happy to have their photo on show.</li>
+          <li>Roles that work alone or in pairs, such as Course Marshals, need a crew and a face of their own.</li>
+          <li>If Deb pulls out, her crew signed up for Deb.</li>
+        </ul></div>
+      </div>
+      <div class="says"><p class="label">Margaret says</p><p>"Oh, she looks nice. And there's a kettle. Put me down with Deb."</p></div>
+    </div>
+  </article>
+
+  <article class="wild" id="follow-my-runner">
+    <div class="rank"><small>Second</small>2</div>
+    <div class="idea-body">
+      <div class="idea-head">
+        <h3>Follow My Runner</h3>
+        <p class="prose">The first question is "Who are you here for?" Margaret types her grandson's name and picks his race. The platform draws his day as a simple picture, then offers the jobs that fit around it: "Hand out drinks at the halfway aid station and you'll see Tom come through around 10am. You'll be back at the finish with time to spare." Volunteers with nobody running skip the question and see everything.</p>
+      </div>
+      <div class="pips" aria-label="Margaret test: 7.5 of 8">
+        <span class="pip p">1<b>&#10003;</b></span><span class="pip p">2<b>&#10003;</b></span><span class="pip p">3<b>&#10003;</b></span><span class="pip p">4<b>&#10003;</b></span><span class="pip p">5<b>&#10003;</b></span><span class="pip p">6<b>&#10003;</b></span><span class="pip p">7<b>&#10003;</b></span><span class="pip">8<b>~</b></span>
+        <span class="score">7.5 of 8</span>
+      </div>
+      <div class="pc">
+        <div class="pros"><h4>What works</h4><ul>
+          <li>It starts from the real reason most family members are there, and turns spectators into volunteers.</li>
+          <li>It removes the biggest worry: "If I help, will I miss seeing them?"</li>
+          <li>Every runner becomes a recruiter. "Mum, sign up and you'll see me at halfway."</li>
+          <li>It steers people to on-course jobs that are usually the hardest to fill.</li>
+        </ul></div>
+        <div class="cons"><h4>What trips it up</h4><ul>
+          <li>Runner times are a guess. If Tom has a shocker or a blinder, Margaret misses him and we broke a promise.</li>
+          <li>It only helps volunteers who have a runner. Everyone else needs the ordinary way in.</li>
+          <li>It asks for someone else's name, so the page must say plainly why and that it isn't kept.</li>
+          <li>Each course needs rough timing worked out for every distance.</li>
+        </ul></div>
+      </div>
+      <div class="says"><p class="label">Margaret says</p><p>"You mean I can help and still see him? Well, why didn't you say so. Halfway it is."</p></div>
+    </div>
+  </article>
+
+  <article class="wild" id="bakery-poster">
+    <div class="rank"><small>Third</small>3</div>
+    <div class="idea-body">
+      <div class="idea-head">
+        <h3>The Bakery Poster</h3>
+        <p class="prose">The sign-up starts on paper, in town. A poster goes up in the bakery, the general store and the footy club, with a row of tear-off tabs along the bottom. Each tab is one job with one word on it: MEDALS, DRINKS, CHEER. Tear one off, text the word to the number on the tab, and you're in. Or ring the number and talk to us. The reply text confirms the job, time and place, and asks for an emergency contact.</p>
+      </div>
+      <div class="pips" aria-label="Margaret test: 7.5 of 8">
+        <span class="pip p">1<b>&#10003;</b></span><span class="pip p">2<b>&#10003;</b></span><span class="pip">3<b>~</b></span><span class="pip p">4<b>&#10003;</b></span><span class="pip p">5<b>&#10003;</b></span><span class="pip p">6<b>&#10003;</b></span><span class="pip p">7<b>&#10003;</b></span><span class="pip p">8<b>&#10003;</b></span>
+        <span class="score">7.5 of 8</span>
+      </div>
+      <div class="pc">
+        <div class="pros"><h4>What works</h4><ul>
+          <li>It reaches the locals in Halls Gap, Bright and Blackheath who never see our emails or socials.</li>
+          <li>She starts the conversation, so there is no worry about a strange link in a text.</li>
+          <li>The tab goes on the fridge as her reminder.</li>
+          <li>Cheap and simple to build: a text number and a list of words.</li>
+        </ul></div>
+        <div class="cons"><h4>What trips it up</h4><ul>
+          <li>A poster can't update itself. A torn tab is not a sign-up, and a full job still has tabs hanging.</li>
+          <li>Someone has to print, put up and take down posters in each town.</li>
+          <li>The phone side is plain text, so the pictures stop at the poster.</li>
+          <li>It only works where people walk past it. Volunteers from out of town need another way in.</li>
+        </ul></div>
+      </div>
+      <div class="says"><p class="label">Margaret says</p><p>"I saw it while I was getting my vanilla slice. Tore off MEDALS and had my niece show me how to text it. Done before the coffee came."</p></div>
+    </div>
+  </article>
+
+  <article class="wild" id="just-say-when">
+    <div class="rank"><small>Fourth</small>4</div>
+    <div class="idea-body">
+      <div class="idea-head">
+        <h3>Just Say When</h3>
+        <p class="prose">Margaret doesn't choose a job at all. She gives her name, her mobile and the days she is free, and ticks anything she would rather avoid, such as stairs or early starts. The platform suggests a match and a real person from the team rings or texts with an offer: "We'd love you on finish medals, Saturday 9am. Does that suit?" A week later a card arrives in the post for the fridge, with the job, the time, a little map and who to ring.</p>
+      </div>
+      <div class="pips" aria-label="Margaret test: 7 of 8">
+        <span class="pip">1<b>~</b></span><span class="pip p">2<b>&#10003;</b></span><span class="pip">3<b>~</b></span><span class="pip p">4<b>&#10003;</b></span><span class="pip p">5<b>&#10003;</b></span><span class="pip p">6<b>&#10003;</b></span><span class="pip p">7<b>&#10003;</b></span><span class="pip p">8<b>&#10003;</b></span>
+        <span class="score">7 of 8</span>
+      </div>
+      <div class="pc">
+        <div class="pros"><h4>What works</h4><ul>
+          <li>The shortest sign-up of all ten ideas. There is nothing to choose and nothing to get wrong.</li>
+          <li>The team places people where they are needed, so the hard jobs get filled first.</li>
+          <li>A phone call from a real person is the warmest welcome we can give.</li>
+          <li>The fridge card is a keepsake and a reminder in one.</li>
+        </ul></div>
+        <div class="cons"><h4>What trips it up</h4><ul>
+          <li>It adds work for the team, and admin is already the sore point. It suits dozens of volunteers, not hundreds.</li>
+          <li>She gives her details before she sees a job, which bends the first rule of the Margaret test.</li>
+          <li>There is a wait between putting her hand up and knowing what she is doing.</li>
+          <li>Printing and posting cards costs a few dollars each and needs a postal address.</li>
+        </ul></div>
+      </div>
+      <div class="says"><p class="label">Margaret says</p><p>"A lovely young man rang and asked if medals would suit. Then a card came in the post. It's on the fridge next to the grandkids."</p></div>
+    </div>
+  </article>
+
+  <article class="wild" id="volunteer-bib">
+    <div class="rank"><small>Worst</small>5</div>
+    <div class="idea-body">
+      <div class="idea-head">
+        <h3>The Volunteer Bib</h3>
+        <p class="prose">Volunteering becomes a race you enter. Alongside the 50k and the 20k on the entry page sits a free "Crew" category for each job. Volunteers enter it through runner rego like everyone else. They collect a bib with their name, job and start time printed on it, they get a finisher's medal, and their name goes up in the results with hours crewed in place of a finish time. There is nothing new to build.</p>
+      </div>
+      <div class="pips" aria-label="Margaret test: 2.5 of 8">
+        <span class="pip p">1<b>&#10003;</b></span><span class="pip f">2<b>&#10007;</b></span><span class="pip f">3<b>&#10007;</b></span><span class="pip f">4<b>&#10007;</b></span><span class="pip">5<b>~</b></span><span class="pip p">6<b>&#10003;</b></span><span class="pip f">7<b>&#10007;</b></span><span class="pip f">8<b>&#10007;</b></span>
+        <span class="score">2.5 of 8</span>
+      </div>
+      <div class="pc">
+        <div class="pros"><h4>What works</h4><ul>
+          <li>Volunteers are treated exactly like runners: a bib, a medal and a place in the results.</li>
+          <li>It uses the rego platform SingleTrack already pays for.</li>
+          <li>Runners see the Crew category every time they enter, which is free advertising.</li>
+          <li>Emergency contacts and check-in at bib collection come with it.</li>
+        </ul></div>
+        <div class="cons"><h4>What trips it up</h4><ul>
+          <li>Runner entry forms are long and built for runners. Margaret is asked for an account, a password and details she doesn't need to give.</li>
+          <li>Swapping or pulling out goes through a race transfer process.</li>
+          <li>There is no rostering, no gap view and no crew messaging for the team.</li>
+          <li>It depends on what the runner rego platform allows, which is still an open item.</li>
+        </ul></div>
+      </div>
+      <div class="says"><p class="label">Margaret says</p><p>"It asked for my estimated finish time and my shirt size. I'm not running, dear. But I would like that medal."</p></div>
+    </div>
+  </article>
+
+  <p class="prose" style="margin-top:10px"><strong>What to take from this round.</strong> The top two are cheap to fold into Phase 1. Put the Aid Station Manager's face and hello on every job card, and add "Who are you here for?" as an optional first question. The Bakery Poster is a low-cost extra for the pilot town. From the Volunteer Bib, keep the bib and the medal for race day and leave the sign-up behind.</p>
+</section>
+
 <section id="pick">
   <div class="sec-head">
     <span class="label">Where we'd start</span>
@@ -658,6 +829,7 @@ tbody th { font-family: var(--display); text-transform: uppercase; font-size: 20
     <div>
       <h3>Version history</h3>
       <ul class="plain">
+        <li>v0.3, 12 November 2026: five left-field ideas added, put through the Margaret test and ranked.</li>
         <li>v0.2, 12 November 2026: eight open items answered by the Operations Manager and recorded as decisions. Recommendation firmed up as an in-house build. Four items remain open.</li>
         <li>v0.1, 11 November 2026: first draft of scope and five platform ideas for discussion.</li>
       </ul>
