@@ -216,8 +216,8 @@ tbody th { font-family: var(--display); text-transform: uppercase; font-size: 20
     <h1>Put your hand up. <em>We'll do the rest.</em></h1>
     <p class="lede">A scope for a new SingleTrack volunteer rego platform to replace iVolunteer, with five ways we could build it. Every idea has been walked through by Margaret, who is 70, loves a chat and does not love passwords.</p>
     <dl class="meta">
-      <div><dt>Version</dt><dd>0.4 draft</dd></div>
-      <div><dt>Issued</dt><dd>12 November 2026</dd></div>
+      <div><dt>Version</dt><dd>0.5 draft</dd></div>
+      <div><dt>Issued</dt><dd>13 November 2026</dd></div>
       <div><dt>Owner</dt><dd>Operations Manager</dd></div>
       <div><dt>Covers</dt><dd>The whole volunteer journey</dd></div>
     </dl>
@@ -777,10 +777,10 @@ tbody th { font-family: var(--display); text-transform: uppercase; font-size: 20
   </div>
   <div class="rec">
     <h3>Ask who you're here for, pick your crew, <em>confirm by text.</em></h3>
-    <p class="why">No single idea wins on its own. The front door from Idea 2 gets Margaret in. The photo cards from Idea 3 let everyone else browse. The messages and password-free link from Idea 4 keep her informed and get her back in. Two ideas from the left-field round are now part of it: every job card is fronted by the person who runs that crew (Join Deb's Crew), and the first question is "Who are you here for?" (Follow My Runner). Build that as our own lean web app, so we keep control of the sign-in and of where details are stored, then add the map and the club once the basics are proven.</p>
+    <p class="why">No single idea wins on its own. The front door from Idea 2 gets Margaret in. The photo cards from Idea 3 let everyone else browse. The messages and password-free link from Idea 4 keep her informed and get her back in. Two ideas from the left-field round are now part of it: every job card is fronted by the person who runs that crew (Join Deb's Crew), and the first question is "Who are you here for?" (Follow My Runner). Build that as our own lean web app, so we keep control of the sign-in and of where details are stored, then add race-day tools and the club once the basics are proven. The Trail Map from Idea 1 is in from the start as a second way to pick a crew, beside the list.</p>
     <div class="phases">
-      <div><b>Phase 1: the basics, done beautifully</b><span>Who are you here for, three questions, crew cards with a face on each, password-free sign-up, reminders, a live roster and messaging for the team. Pilot at one smaller Running Wild event.</span></div>
-      <div><b>Phase 2: the map and race day</b><span>Trail Map view for the big multi-location events, race-day check-in, printable rosters and reporting.</span></div>
+      <div><b>Phase 1: the basics, done beautifully</b><span>Who are you here for, three questions, crew cards with a face on each, a sketch map of where each crew works, password-free sign-up, reminders, a live roster and messaging for the team. Pilot at one smaller Running Wild event.</span></div>
+      <div><b>Phase 2: race day</b><span>Race-day check-in, printable rosters and reporting.</span></div>
       <div><b>Phase 3: the Crew Club</b><span>Passport stamps, rewards, team sign-ups and one-tap sign-up for regulars.</span></div>
     </div>
     <p class="why">This fits the decisions made on 12 November 2026. SingleTrack builds and looks after the platform in-house, the budget stays lean, and the pilot is a small Running Wild event. At 500 to 1,500 volunteers a year, hosting and text fees stay small. The sign-up lives on its own page, linked from the SingleTrack website.</p>
@@ -791,7 +791,7 @@ tbody th { font-family: var(--display); text-transform: uppercase; font-size: 20
   <div class="sec-head">
     <span class="label">What we build first</span>
     <h2>What Phase 1 looks like</h2>
-    <p class="prose">One sign-up page for volunteers and one roster page for the team, proven at a small Running Wild event. There is a clickable example to try on your phone: <a href="https://claude.ai/artifact/JFw3VjVJeCDCo3f3x4r4CB"><strong>open the Phase 1 example page</strong></a>. It uses made-up jobs, names and times.</p>
+    <p class="prose">One sign-up page for volunteers and one roster page for the team, proven at a small Running Wild event. There is a clickable example to try on your phone: <a href="https://claude.ai/artifact/JFw3VjVJeCDCo3f3x4r4CB"><strong>open the Phase 1 example page</strong></a>. It is set at the Mt Buller SkyRun. The places, races and start times are real. The crews, names, jobs and spots are examples.</p>
   </div>
   <div class="split" style="margin-top:0">
     <div>
@@ -801,6 +801,7 @@ tbody th { font-family: var(--display); text-transform: uppercase; font-size: 20
         <li><strong>When are you free?</strong> One tap.</li>
         <li><strong>What sort of job sounds good?</strong> Sitting down, on my feet, chatting with runners, somewhere quiet, or put me where I'm needed.</li>
         <li><strong>Pick your crew.</strong> Three matched crews, each with the face and hello of the person who runs it, the job, the time, the place and the spots left. Where it fits, a line says when they will see their runner.</li>
+        <li><strong>List or map.</strong> The same crews on a sketch map of the course. Tap a place to see who works there. The list stays for anyone who would rather read than look at a map.</li>
         <li><strong>Name and mobile.</strong> Plus a contact for the day. No password.</li>
         <li><strong>You're in.</strong> A summary on screen and by text, a reminder the day before, and one tap to swap or pull out.</li>
         <li>Anyone can skip the questions and browse every crew, or ring and have the team sign them up.</li>
@@ -820,12 +821,12 @@ tbody th { font-family: var(--display); text-transform: uppercase; font-size: 20
       </ul>
       <h3 style="margin-top:28px">Held for later phases</h3>
       <ul class="plain">
-        <li>The Trail Map view, race-day check-in and reporting (Phase 2).</li>
+        <li>Race-day check-in and reporting (Phase 2).</li>
         <li>Crew Club stamps, rewards and team sign-ups (Phase 3).</li>
       </ul>
     </div>
   </div>
-  <p class="note">To settle while building: rough runner timings for each crew location on the pilot course, and each crew contact's consent to have their photo shown.</p>
+  <p class="note">To settle while building: a sketch map and rough runner timings for each crew location on the pilot course, and each crew contact's consent to have their photo shown.</p>
 </section>
 
 <section id="open">
@@ -845,6 +846,7 @@ tbody th { font-family: var(--display); text-transform: uppercase; font-size: 20
         <tr><td>Rewards are free or discounted entry, merch and sometimes food</td><td>The platform records what each volunteer has earned. The Crew Club builds on this in Phase 3.</td></tr>
         <tr><td>Bring contact details only from iVolunteer</td><td>Names, emails and mobiles come across. The first message invites people to the new platform and lets them opt out.</td></tr>
         <tr><td>Join Deb's Crew and Follow My Runner are in Phase 1</td><td>Every crew has a face and a hello. "Who are you here for?" is the optional first question.</td></tr>
+        <tr><td>The Trail Map view is in Phase 1</td><td>Each event needs a simple sketch map with its crew locations pinned. The list view stays beside it.</td></tr>
         <tr><td>Adults sign up themselves, kids come with a parent</td><td>Anyone 18 or over signs up in their own name. A parent or guardian adds under 18s and volunteers alongside them.</td></tr>
       </tbody>
     </table>
@@ -872,6 +874,7 @@ tbody th { font-family: var(--display); text-transform: uppercase; font-size: 20
     <div>
       <h3>Version history</h3>
       <ul class="plain">
+        <li>v0.5, 13 November 2026: Trail Map view moved from Phase 2 into Phase 1. Example page now set at the Mt Buller SkyRun.</li>
         <li>v0.4, 12 November 2026: Join Deb's Crew and Follow My Runner adopted into Phase 1. Phase 1 defined, with a clickable example page.</li>
         <li>v0.3, 12 November 2026: five left-field ideas added, put through the Margaret test and ranked.</li>
         <li>v0.2, 12 November 2026: eight open items answered by the Operations Manager and recorded as decisions. Recommendation firmed up as an in-house build. Four items remain open.</li>
