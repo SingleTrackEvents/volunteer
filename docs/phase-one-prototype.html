@@ -1,9 +1,9 @@
-<title>Crew Sign-up Prototype</title>
+<title>Volunteer Sign-up Prototype</title>
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Montserrat:wght@400;500;600;700&display=swap">
 <style>
 /* Layout: one phone-width column, one question per screen, a charcoal top bar with a
-   switch between what the volunteer sees and what the team sees. Type is big on purpose.
+   switch between what the volunteer sees and what the organisers see. Type is big on purpose.
    Look follows singletrack.com.au: Bebas Neue uppercase headlines, Montserrat body,
    white logo over charcoal, teal parallelograms. */
 :root {
@@ -95,11 +95,16 @@ textarea { font-size: 18px; line-height: 1.45; min-height: 170px; resize: vertic
 .err { background: var(--coral-soft); color: var(--coral-ink); border-left: 6px solid var(--coral-ink); padding: 10px 14px; font-weight: 600; }
 .note { background: var(--teal-soft); border-left: 6px solid var(--teal-ink); padding: 12px 14px; font-weight: 600; }
 
-/* Crew cards: square-ish, a teal edge, no shadow */
-.crew { background: var(--panel); border: 1px solid var(--rule); border-left: 6px solid var(--teal); border-radius: 4px; padding: 18px; display: flex; flex-direction: column; gap: 12px; }
+/* Job cards: square-ish, a teal edge, no shadow. Titled by place and job; the person who looks after them comes second */
+.jcard { background: var(--panel); border: 1px solid var(--rule); border-left: 6px solid var(--teal); border-radius: 4px; padding: 18px; display: flex; flex-direction: column; gap: 12px; }
 .who { display: flex; gap: 14px; align-items: center; }
 .av { flex: none; width: 64px; height: 64px; border-radius: 50%; background: var(--band); color: var(--teal); display: grid; place-items: center; font-family: var(--display); font-size: 38px; padding-top: 4px; }
-.crew h3 { font-size: 32px; }
+.jcard h3 { font-size: 32px; }
+.jhead { display: flex; flex-direction: column; gap: 6px; }
+.jobline { font-weight: 600; }
+.who > div { min-width: 0; }
+.lname { font-weight: 700; line-height: 1.3; }
+.invite { border: 2px dashed var(--rule); border-radius: 4px; padding: 12px 14px; display: flex; flex-direction: column; align-items: flex-start; gap: 8px; }
 .role { color: var(--slate); font-size: 16px; }
 .hello { font-style: italic; }
 .facts { margin: 0; display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 6px 14px; font-size: 17px; }
@@ -186,7 +191,7 @@ main.wide .map { max-width: 760px; }
 .placebox { display: flex; flex-direction: column; gap: 6px; padding-top: 4px; }
 .placebox h3 { font-size: 34px; }
 
-/* Team view */
+/* Organiser view */
 .thead { display: flex; flex-direction: column; gap: 6px; }
 .sum { display: flex; flex-wrap: wrap; gap: 10px 34px; border-block: 2px solid var(--ink); padding-block: 12px; }
 .sum div { display: flex; flex-direction: column; }
@@ -200,6 +205,9 @@ main.wide .map { max-width: 760px; }
 .rost.need { border-top: 6px solid var(--coral-ink); }
 .rhead { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 6px 14px; align-items: baseline; }
 .rhead h3 { font-size: 30px; }
+.lstate { font-weight: 700; }
+.lstate.none { color: var(--coral-ink); }
+.offer { font-weight: 600; }
 .pill { font-size: 15px; font-weight: 700; padding: 3px 12px; border-radius: 99px; border: 2px solid var(--rule); white-space: nowrap; }
 .pill.need { background: var(--coral-soft); color: var(--coral-ink); border-color: var(--coral-ink); }
 .pill.some { color: var(--coral-ink); border-color: var(--coral-ink); }
@@ -230,12 +238,12 @@ main.wide .map { max-width: 760px; }
   <div class="brand"><img src="data:image/png;base64,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" alt="SingleTrack Events" width="148" height="26"><span class="tag"><span>Example</span></span></div>
   <div class="switch" role="group" aria-label="Choose a view">
     <button type="button" id="view-vol" data-act="view" data-v="vol" aria-pressed="true">Volunteer view</button>
-    <button type="button" id="view-team" data-act="view" data-v="team" aria-pressed="false">Team view</button>
+    <button type="button" id="view-team" data-act="view" data-v="team" aria-pressed="false">Organiser view</button>
   </div>
 </div></div>
 <div id="hero"></div>
 <div class="gut"><main id="app"></main></div>
-<p class="foot gut">Example page for Phase 1. Real: the places, races, start times, aid station hours, the Mirimbah Park toilets and the Village Square address. Examples made up for the demo: the crews, names, jobs, shift times, spots, the &ldquo;around&rdquo; times, what to bring and the message counts. Nothing you type is saved or sent, and no texts go out. Logos belong to SingleTrack Events. Real crew photos replace the initials.</p>
+<p class="foot gut">Example page for Phase 1. Real: the places, races, start times, aid station hours, the Mirimbah Park toilets and the Village Square address. Examples made up for the demo: the teams, the names (Kim, the Volunteer Coordinator, is an example name too), who leads each job, the jobs, shift times, volunteer numbers, the &ldquo;around&rdquo; times, what to bring and the message counts. Nothing you type is saved or sent, and no texts go out. Logos belong to SingleTrack Events. Real photos replace the initials.</p>
 <div id="toast" class="toast" role="status" aria-live="polite" hidden></div>
 
 <script>
@@ -243,7 +251,7 @@ const BADGE = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAUAAAAFACAMAAAD6TlW
 const pool = ['Anh','Bev','Carlos','Dot','Emre','Fiona','Gus','Hana','Ian','Jude','Kev','Lena','Mick','Nadia','Ollie','Priya','Quinn','Rosa','Stu','Tess','Uma','Vic','Wen','Xavier','Yasmin','Zoe','Arlo','Bronte','Col','Dee'];
 let pi = 0;
 const take = n => Array.from({ length: n }, () => pool[pi++ % pool.length]);
-// Real places from the event plan. The crews below are examples.
+// Real places from the event plan. The jobs, teams and leads below are examples.
 const places = [
   { id: 'village', short: 'Village Square', name: 'Village Square', lat: -37.14641, lon: 146.44973, races: ['45', '36', '22', '5', 'kids'],
     about: 'Start and finish for every race, with food and water.' },
@@ -261,48 +269,65 @@ const marks = [
   { id: 'craigs', name: "Craig's Hut", lat: -37.110, lon: 146.535 }
 ];
 const races = { 45: '45km', 36: '36km', 22: '22km', 5: '5km', kids: '2km Kids' };
-const crews = [
-  { id: 'stirling', loc: 'stirling', lead: 'Jo', role: 'Aid Station Manager', job: 'Fill bottles and hand out food to runners', place: 'Mt Stirling aid station', time: '7am to 1.30pm', period: 'am', styles: ['feet', 'chat'], need: 4, have: 1,
-    perks: 'You work alongside Jo all morning. Bring a warm layer, it is a mountain', hello: "Up on Mt Stirling we keep runners fed, watered and smiling. I need a few more mates for the morning.",
+// Each job sits at a place and has a team of volunteers. The lead is optional: null means nobody is confirmed yet,
+// so Kim, the Volunteer Coordinator (an example name), looks after the team until someone is.
+// title: what the card is called. tn: the team. short and jn: for the swap and join buttons. aid: an aid station.
+const KIM = 'Kim';
+const groups = [
+  { id: 'stirling', loc: 'stirling', title: 'Mt Stirling aid station', tn: 'Mt Stirling team', short: 'Mt Stirling', jn: 'at Mt Stirling', aid: true,
+    lead: { name: 'Jo', hello: "Up on Mt Stirling we keep runners fed, watered and smiling. I need a few more mates for the morning." },
+    job: 'Fill bottles and hand out food to runners', place: 'Mt Stirling aid station', time: '7am to 1.30pm', period: 'am', styles: ['feet', 'chat'], need: 4, have: 1,
+    perks: 'You work alongside the Aid Station Manager all morning. Bring a warm layer, it is a mountain',
     sees: { 45: 'around 9.30am', 36: 'around 9.30am', 22: 'around 10.30am' } },
-  { id: 'mirimbah', loc: 'mirimbah', lead: 'Raj', role: 'Aid Station Manager', job: 'Fill bottles and hand out food to runners', place: 'Mirimbah Park aid station', time: '7.30am to 3.30pm', period: 'am', styles: ['feet', 'chat', 'quiet'], need: 2, have: 0,
-    perks: 'Public toilets at the park. Bring a camp chair', hello: "Down in the valley at Mirimbah Park. Runners arrive tired and leave smiling. Come and help me look after them.",
+  { id: 'mirimbah', loc: 'mirimbah', title: 'Mirimbah Park aid station', tn: 'Mirimbah Park team', short: 'Mirimbah Park', jn: 'at Mirimbah Park', aid: true, lead: null,
+    job: 'Fill bottles and hand out food to runners', place: 'Mirimbah Park aid station', time: '7.30am to 3.30pm', period: 'am', styles: ['feet', 'chat', 'quiet'], need: 2, have: 0,
+    perks: 'Public toilets at the park. Bring a camp chair',
     sees: { 45: 'around 12.30pm', 36: 'around 11.30am' } },
-  { id: 'crossing', loc: 'crossing', lead: 'Sam', role: 'Course Marshal', job: 'Hold runners at the road crossing until it is safe to go', place: 'Mirimbah Road crossing, beside Mirimbah Park', time: '10.30am to 3.30pm', period: 'mid', styles: ['feet', 'quiet'], need: 2, have: 2,
-    perks: 'You work in a pair. Bring a camp chair', hello: "A calm, quiet spot and an important job. Runners always thank you for keeping them safe.",
+  { id: 'crossing', loc: 'crossing', title: 'Mirimbah Road crossing', tn: 'road crossing team', short: 'the road crossing', jn: 'at the road crossing', lead: null,
+    job: 'Course Marshal. Hold runners at the road crossing until it is safe to go', place: 'Mirimbah Road crossing, beside Mirimbah Park', time: '10.30am to 3.30pm', period: 'mid', styles: ['feet', 'quiet'], need: 2, have: 2,
+    perks: 'You work in a pair. A calm, quiet spot and an important job. Bring a camp chair',
     sees: { 45: 'around 12.30pm', 36: 'around 11.30am' } },
-  { id: 'medals', loc: 'village', lead: 'Deb', role: 'Crew contact', job: 'Hang finish medals around tired necks', place: 'Village Square, at the finish line', time: '10am to 2pm', period: 'mid', styles: ['sit', 'chat'], need: 3, have: 2,
-    perks: 'Chairs, shade and coffee close by', hello: "Best job at the event. Every single runner is happy to see you. Chairs for anyone who wants one.", finish: true },
-  { id: 'food', loc: 'village', lead: 'Mel', role: 'Crew contact', job: 'Hand out food and drinks to runners at the finish', place: 'Village Square, at the finish', time: '12pm to 4pm', period: 'pm', styles: ['feet', 'chat'], need: 3, have: 1,
-    perks: 'Right in the middle of the fun, with music', hello: "We feed hungry runners as they cross the line. Bring your loudest cheer.", finish: true },
-  { id: 'kids', loc: 'village', lead: 'Pete', role: 'Crew contact', job: 'Cheer on the kids race and the 5km runners', place: 'Village Square, by the start', time: '9.30am to 12pm', period: 'mid', styles: ['feet', 'chat'], need: 2, have: 1,
-    perks: 'Done by lunchtime. Cowbells supplied', hello: "The kids race is the loudest, happiest bit of the day. Come and cheer them home.", finish: true }
+  { id: 'medals', loc: 'village', title: 'Village Square: finish line medals', tn: 'finish medals team', short: 'finish medals', jn: 'for finish medals',
+    lead: { name: 'Deb', hello: "Best job at the event. Every single runner is happy to see you. Chairs for anyone who wants one." },
+    job: 'Hang finish medals around tired necks', place: 'Village Square, at the finish line', time: '10am to 2pm', period: 'mid', styles: ['sit', 'chat'], need: 3, have: 2,
+    perks: 'Chairs, shade and coffee close by', finish: true },
+  { id: 'food', loc: 'village', title: 'Village Square: finish line food', tn: 'finish food team', short: 'finish food', jn: 'for finish food', lead: null,
+    job: 'Hand out food and drinks to runners at the finish', place: 'Village Square, at the finish', time: '12pm to 4pm', period: 'pm', styles: ['feet', 'chat'], need: 3, have: 1,
+    perks: 'Right in the middle of the fun, with music', finish: true },
+  { id: 'kids', loc: 'village', title: 'Village Square: kids race cheering', tn: 'kids race cheer team', short: 'kids race cheering', jn: 'for kids race cheering', lead: null,
+    job: 'Cheer on the kids race and the 5km runners', place: 'Village Square, by the start', time: '9.30am to 12pm', period: 'mid', styles: ['feet', 'chat'], need: 2, have: 1,
+    perks: 'Done by lunchtime. Cowbells supplied', finish: true }
 ];
-// Everyone on a roster. src: ex (example), me (the demo volunteer), friend (someone she brings), phone (added by the team).
+groups.forEach(c => { c.offers = []; }); // ids of people who tapped "I could lead this"
+// Everyone on a roster. src: ex (example), me (the demo volunteer), friend (someone she brings), phone (added by an organiser).
 // We only note whether a person has a mobile, never the number itself.
 let uid = 0;
 const ppl = [];
-const addP = (name, crew, o) => { const p = Object.assign({ id: 'p' + (++uid), name, crew, mob: true, src: 'ex' }, o); ppl.push(p); return p; };
-crews.forEach(c => take(c.have).forEach(n => addP(n, c.id)));
+const addP = (name, gid, o) => { const p = Object.assign({ id: 'p' + (++uid), name, gid, mob: true, src: 'ex' }, o); ppl.push(p); return p; };
+groups.forEach(c => take(c.have).forEach(n => addP(n, c.id)));
 const PAST = 24; // example number of past volunteers, for the demo
 
 const S = { view: 'vol', step: 'home', runner: null, when: null, style: null, pick: null, me: null, err: '', asked: false, mode: 'list', place: null,
-  from: 'mine', kind: null, ecEdit: false, d: {}, tv: 'roster', tmode: 'list', tplace: null, addCrew: null, mv: null, msg: null, log: [], sent: null };
+  from: 'mine', kind: null, ecEdit: false, d: {}, tv: 'roster', tmode: 'list', tplace: null, addGrp: null, mv: null, msg: null, log: [], sent: null, pre: new Set() };
 const app = document.getElementById('app'), heroEl = document.getElementById('hero');
 const esc = s => String(s).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
 const dv = id => esc(S.d[id] || '');
-const byId = id => crews.find(c => c.id === id);
-const onCrew = id => ppl.filter(p => p.crew === id);
-const spots = c => c.need - onCrew(c.id).length;
+const byId = id => groups.find(c => c.id === id);
+const onGroup = id => ppl.filter(p => p.gid === id);
+const spots = c => c.need - onGroup(c.id).length;
 const meP = () => S.me && ppl.find(p => p.id === S.me.pid);
-const myCrew = () => { const p = meP(); return p && byId(p.crew); };
+const myGroup = () => { const p = meP(); return p && byId(p.gid); };
 const mates = () => S.me ? ppl.filter(p => p.host === S.me.pid) : [];
 const party = p => p.src === 'me' ? [p, ...mates()] : [p];
 const okMob = m => /^\+?\d{8,12}$/.test(m.replace(/\s/g, ''));
 const words = ['No', 'One', 'Two', 'Three', 'Four', 'Five', 'Six', 'Seven', 'Eight'];
-const spotWords = n => `${n} ${n === 1 ? 'spot' : 'spots'} left`;
+const vols = n => `${n} ${n === 1 ? 'volunteer' : 'volunteers'}`;
+const needWords = n => n > 0 ? `Needs ${n} more ${n === 1 ? 'volunteer' : 'volunteers'}` : 'Full';
 const andList = a => a.length < 2 ? a.join('') : a.slice(0, -1).join(', ') + ' and ' + a[a.length - 1];
 const where = c => c.place.split(',')[0];
+const leadRole = c => c.aid ? 'Aid Station Manager' : 'contact on the day';
+const leadTitle = c => c.aid ? 'Aid Station Manager' : 'Contact on the day';
+const isMeLead = c => !!(S.me && c.lead && c.lead.pid === S.me.pid);
 const help = '<p class="help">Rather talk to a person? Ring us on <b>[phone]</b> and we will sort it out with you.</p>';
 const stepBar = (n, back) => `<div class="step"><button class="back" type="button" id="back" data-act="go" data-s="${back}">&larr; Back</button><span>Step ${n} of 5</span></div>`;
 const backBar = (to, label) => `<div class="step"><button class="back" type="button" id="back" data-act="go" data-s="${to}">&larr; ${label || 'Back'}</button></div>`;
@@ -317,18 +342,35 @@ function seeLine(c) {
   const t = c.sees && c.sees[S.runner.race];
   return t ? `<p class="see">You will see ${who} come through ${t}. That is our best guess. Runners have their own ideas.</p>` : '';
 }
+// Who looks after this team: the confirmed lead, or Kim until a lead is confirmed. There is always a named person.
+function leadBlock(c) {
+  if (c.lead) {
+    const me = isMeLead(c), n = esc(c.lead.name);
+    return `<div class="who"><span class="av" aria-hidden="true">${esc(c.lead.name.charAt(0))}</span><div><p class="lname">${me ? 'You are looking after this one' : `${n} is looking after this one`}</p><p class="role">${me ? 'You are the ' + leadRole(c) : `${n}, ${leadRole(c)}`}</p></div></div>
+      ${c.lead.hello ? `<p class="hello">&ldquo;${c.lead.hello}&rdquo;</p>` : ''}`;
+  }
+  return `<div class="who"><span class="av" aria-hidden="true">K</span><div><p class="lname">${KIM}, Volunteer Coordinator</p><p class="role">Looks after you for now</p></div></div>
+    <p>${KIM} from SingleTrack looks after you until your ${leadRole(c)} is confirmed. We will text you as soon as we know who it is.</p>`;
+}
+// A small, secondary invitation to lead. It records interest only. Nothing is promised.
+function invite(c) {
+  if (c.lead) return '';
+  const done = S.me ? c.offers.includes(S.me.pid) : S.pre.has(c.id);
+  return done ? `<p class="see" id="offered-${c.id}" tabindex="-1">Thanks for offering to lead. ${S.me ? 'The' : 'Once you sign up, the'} SingleTrack team will be in touch for a chat. Nothing is set until then.</p>`
+    : `<div class="invite"><p>This one needs someone to lead it. Done it before?</p><button class="smallbtn" type="button" id="offer-${c.id}" data-act="offer" data-val="${c.id}">I could lead this</button></div>`;
+}
 function card(c) {
-  const n = spots(c), mine = myCrew() === c, gs = S.me ? party(meP()).length : 1;
+  const n = spots(c), mine = myGroup() === c, gs = S.me ? party(meP()).length : 1;
   let act;
-  if (mine) act = '<p class="see">This is your crew.</p>';
-  else if (n <= 0) act = '<p class="left">This crew is full</p>';
-  else if (n < gs) act = `<p class="left">${spotWords(n)}, not enough for your group of ${gs}</p>`;
-  else act = `<p class="left">${spotWords(n)}</p><button class="go" type="button" id="pick-${c.id}" data-act="pick" data-val="${c.id}">${S.me ? `Swap to ${c.lead}'s crew` : `I'm with ${c.lead}`}</button>`;
-  return `<article class="crew">
-    <div class="who"><span class="av" aria-hidden="true">${c.lead[0]}</span><div><h3>Join ${c.lead}'s crew</h3><p class="role">${c.lead}, ${c.role}</p></div></div>
-    <p class="hello">&ldquo;${c.hello}&rdquo;</p>
-    <dl class="facts"><dt>The job</dt><dd>${c.job}</dd><dt>When</dt><dd>Sunday, ${c.time}</dd><dt>Where</dt><dd>${c.place}</dd><dt>Good to know</dt><dd>${c.perks}</dd></dl>
-    ${seeLine(c)}${act}
+  if (mine) act = '<p class="see">This is your job.</p>';
+  else if (n <= 0) act = '<p class="left">This job is full</p>';
+  else if (n < gs) act = `<p class="left">${needWords(n)}, not enough room for your group of ${gs}</p>`;
+  else act = `<p class="left">${needWords(n)}</p><button class="go" type="button" id="pick-${c.id}" data-act="pick" data-val="${c.id}">${S.me ? `Swap to ${c.short}` : `Count me in ${c.jn}`}</button>`;
+  return `<article class="jcard">
+    <div class="jhead"><h3>${c.title}</h3><p class="jobline">${c.job}</p></div>
+    ${leadBlock(c)}
+    <dl class="facts"><dt>When</dt><dd>Sunday, ${c.time}</dd><dt>Where</dt><dd>${c.place}</dd><dt>Good to know</dt><dd>${c.perks}</dd></dl>
+    ${seeLine(c)}${act}${invite(c)}
   </article>`;
 }
 function matches() {
@@ -341,31 +383,33 @@ function matches() {
     if (S.runner && (c.finish || (c.sees && c.sees[S.runner.race]))) s += 2;
     return s;
   };
-  return crews.filter(c => spots(c) > 0).sort((a, b) => score(b) - score(a)).slice(0, 3);
+  return groups.filter(c => spots(c) > 0).sort((a, b) => score(b) - score(a)).slice(0, 3);
 }
 
-/* ---- Map, shared by the volunteer view and the team view ---- */
-const at = pl => crews.filter(c => c.loc === pl.id);
+/* ---- Map, shared by the volunteer view and the organiser view ---- */
+const at = pl => groups.filter(c => c.loc === pl.id);
 const passes = pl => !!S.runner && (S.runner.race === 'unsure' ? pl.id === 'village' : pl.races.includes(S.runner.race));
 const seg = (pre, mode, what) => `<div class="seg" role="group" aria-label="Show the ${what} as a list or on a map">
     <button type="button" id="${pre}-list" data-act="${pre}" data-val="list" aria-pressed="${mode === 'list'}">List</button>
     <button type="button" id="${pre}-map" data-act="${pre}" data-val="map" aria-pressed="${mode === 'map'}">Map</button></div>`;
 const pinBtn = (pl, act, on, inner, cls) => `<button type="button" class="pin${cls || ''}" id="pin-${pl.id}" data-act="${act}" data-val="${pl.id}" data-at="${pl.id}" aria-pressed="${on}"><span class="pn">${pl.short}</span>${inner}</button>`;
 function volPin(pl) {
-  const n = at(pl).reduce((a, c) => a + Math.max(0, spots(c)), 0), mine = myCrew() && myCrew().loc === pl.id;
-  return pinBtn(pl, 'place', S.place === pl.id, `<span class="ps${n ? '' : ' full'}">${n ? spotWords(n) : 'Full'}</span>${mine ? '<span class="pp">Your crew</span>' : ''}${passes(pl) ? `<span class="pp">&#9733; ${S.runner.name ? runnerName() : 'Your runner'} ${pl.id === 'village' ? 'finishes' : 'passes'}</span>` : ''}`);
+  const n = at(pl).reduce((a, c) => a + Math.max(0, spots(c)), 0), mine = myGroup() && myGroup().loc === pl.id;
+  return pinBtn(pl, 'place', S.place === pl.id, `<span class="ps${n ? '' : ' full'}">${n ? 'Needs ' + n + ' more' : 'Full'}</span>${mine ? '<span class="pp">Your job</span>' : ''}${passes(pl) ? `<span class="pp">&#9733; ${S.runner.name ? runnerName() : 'Your runner'} ${pl.id === 'village' ? 'finishes' : 'passes'}</span>` : ''}`);
 }
 const gapAt = pl => at(pl).reduce((a, c) => a + Math.max(0, spots(c)), 0);
 function teamPin(pl) {
   const g = gapAt(pl), need = at(pl).reduce((a, c) => a + c.need, 0), most = g > 0 && g === Math.max(...places.map(gapAt));
-  return pinBtn(pl, 'tplace', S.tplace === pl.id, `<span class="ps${g ? '' : ' full'}">${g ? 'Needs ' + g : 'Full'}</span><span class="pf">${need - g} of ${need} filled</span>${most ? '<span class="pb">Biggest gap</span>' : ''}`, (most ? ' gapmax' : '') + (g ? '' : ' full'));
+  const nl = at(pl).filter(c => !c.lead).length, one = at(pl).length === 1;
+  const lead = nl ? `<span class="pf">${one ? 'No lead yet' : nl + ' need a lead'}</span>` : '';
+  return pinBtn(pl, 'tplace', S.tplace === pl.id, `<span class="ps${g ? '' : ' full'}">${g ? 'Needs ' + g + ' more' : 'Full'}</span><span class="pf">${need - g} of ${need} filled</span>${lead}${most ? '<span class="pb">Biggest gap</span>' : ''}`, (most ? ' gapmax' : '') + (g ? '' : ' full'));
 }
 function volPlace() {
   const pl = places.find(p => p.id === S.place);
-  if (!pl) return '<p class="tapnote">Tap a place on the map to see its crews.</p>';
+  if (!pl) return '<p class="tapnote">Tap a place on the map to see its jobs.</p>';
   const cs = at(pl);
   return `<section class="placebox" id="place-box" aria-labelledby="place-head"><h3 id="place-head">${pl.name}</h3><p class="sub">${pl.about}</p>
-    <p class="sub">${cs.length === 1 ? 'One crew works here.' : words[cs.length] + ' crews work here.'}</p></section>${cs.map(card).join('')}`;
+    <p class="sub">${cs.length === 1 ? 'One job here.' : words[cs.length] + ' jobs here.'}</p></section>${cs.map(card).join('')}`;
 }
 function teamPlace() {
   const pl = places.find(p => p.id === S.tplace);
@@ -375,11 +419,11 @@ function teamPlace() {
 }
 function mapBlock(kind) {
   const team = kind === 'team';
-  const legend = team ? '<p class="sub">Each place says how many more helpers it needs. The biggest gap is marked. Tap a place to see its rosters.</p>'
-    : !S.runner ? '<p class="sub">Tap a place on the map to see the crews there.</p>' : S.runner.race === 'unsure'
+  const legend = team ? '<p class="sub">Each place says how many more volunteers it needs and whether it still needs a lead. The biggest gap is marked. Tap a place to see its rosters.</p>'
+    : !S.runner ? '<p class="sub">Tap a place on the map to see the jobs there.</p>' : S.runner.race === 'unsure'
     ? `<p class="see">&#9733; Every race finishes at Village Square, so you will see ${runnerName()} there.</p>`
     : `<p class="see">&#9733; The star shows the places ${runnerName()}'s ${races[S.runner.race]} race goes past.</p>`;
-  return `${legend}<div class="map" id="map" data-kind="${kind}" data-sel="${(team ? S.tplace : S.place) || ''}" role="group" aria-label="Sketch map of Mt Buller. Tap a place to see its ${team ? 'rosters' : 'crews'}.">
+  return `${legend}<div class="map" id="map" data-kind="${kind}" data-sel="${(team ? S.tplace : S.place) || ''}" role="group" aria-label="Sketch map of Mt Buller. Tap a place to see its ${team ? 'rosters' : 'jobs'}.">
     <svg id="map-svg" aria-hidden="true" focusable="false"></svg>
     ${places.map(team ? teamPin : volPin).join('')}
     ${marks.map(m => `<span class="lm" data-at="${m.id}">${m.name}</span>`).join('')}
@@ -446,16 +490,16 @@ function layoutMap() {
 
 /* ---- Volunteer screens ---- */
 const hero = () => `<section class="hero" aria-labelledby="hero-head"><div class="in gut">
-    <p class="kick"><span class="tag"><span>Volunteer crew</span></span>Running Wild series</p>
+    <p class="kick"><span class="tag"><span>Volunteers</span></span>Running Wild series</p>
     <h1 id="hero-head">Put your hand up. <em>We'll do the rest.</em></h1>
     <div class="ev"><img src="${BADGE}" alt="Mount Buller event badge, SingleTrack Running Wild" width="104" height="104"><div><b>Mt Buller SkyRun</b><span>Mount Buller, Victoria</span><span>Sunday 6 December 2026</span></div></div>
-    <button class="go" type="button" id="start" data-act="go" data-s="who">Find me a crew</button>
+    <button class="go" type="button" id="start" data-act="go" data-s="who">Find me a job</button>
   </div><span class="slash" aria-hidden="true"></span></section>`;
 const screens = {
-  home: () => { const open = crews.filter(c => spots(c) > 0).length; return `
-    <p>Answer three easy questions and we will find you a crew. It takes about two minutes and there is no password.</p>
-    <p class="sub">${words[open]} ${open === 1 ? 'crew is' : 'crews are'} looking for helpers. Every race starts and finishes at Village Square, Mt Buller.</p>
-    <div class="btns"><button class="plainbtn" type="button" id="home-all" data-act="go" data-s="all">Show me all the crews first</button>
+  home: () => { const open = groups.filter(c => spots(c) > 0).length; return `
+    <p>Answer three easy questions and we will find you a job that suits you. It takes about two minutes and there is no password.</p>
+    <p class="sub">${words[open]} ${open === 1 ? 'job needs' : 'jobs need'} volunteers. Every race starts and finishes at Village Square, Mt Buller.</p>
+    <div class="btns"><button class="plainbtn" type="button" id="home-all" data-act="go" data-s="all">Show me all the jobs first</button>
     <button class="plainbtn" type="button" id="home-map" data-act="mapgo">Show me the map</button></div>
     ${help}`; },
   who: () => `${stepBar(1, 'home')}
@@ -494,50 +538,57 @@ const screens = {
       ${big('style', 'any', 'Put me where I am needed most')}
     </div>${help}`,
   matches: () => `${stepBar(4, 'style')}
-    <h2>Pick your crew</h2>
-    ${seg('mode', S.mode, 'crews')}
+    <h2>Where would you like to help?</h2>
+    ${seg('mode', S.mode, 'jobs')}
     ${S.mode === 'map' ? mapBlock('vol')
-      : `<p class="sub">These three suit you best. Each crew has a person who looks after you on the day.</p>
+      : `<p class="sub">These three suit you best. Every job has a named person who looks after you on the day.</p>
     ${matches().map(card).join('')}
-    <button class="plainbtn" type="button" id="see-all" data-act="go" data-s="all">Show me all the crews</button>`}${help}`,
+    <button class="plainbtn" type="button" id="see-all" data-act="go" data-s="all">Show me all the jobs</button>`}${help}`,
   all: () => `${backBar(S.me ? 'mine' : S.style ? 'matches' : 'home', S.me ? 'Back to my page' : 'Back')}
-    <h2>${S.me ? 'Swap to another crew' : 'Every crew, every job'}</h2>
-    ${S.me && mates().length ? `<p class="sub">${andList(mates().map(p => esc(p.name)))} ${mates().length === 1 ? 'comes' : 'come'} with you, so you need a crew with ${party(meP()).length} spots.</p>` : ''}
-    ${seg('mode', S.mode, 'crews')}
-    ${S.mode === 'map' ? mapBlock('vol') : crews.map(card).join('')}${help}`,
+    <h2>${S.me ? 'Swap to another job' : 'Every place, every job'}</h2>
+    ${S.me && mates().length ? `<p class="sub">${andList(mates().map(p => esc(p.name)))} ${mates().length === 1 ? 'comes' : 'come'} with you, so you need a job with room for ${party(meP()).length}.</p>` : ''}
+    ${seg('mode', S.mode, 'jobs')}
+    ${S.mode === 'map' ? mapBlock('vol') : groups.map(card).join('')}${help}`,
   details: () => { const c = byId(S.pick); return `${stepBar(5, S.style ? 'matches' : 'all')}
     <h2>Nearly there. Who are you?</h2>
-    <p class="sub">You are joining ${c.lead}'s crew: ${c.job.toLowerCase()}, Sunday ${c.time}.</p>
+    <p class="sub">You are joining the ${c.tn} on Sunday, ${c.time}. ${c.job}.</p>
     ${S.err ? `<p class="err" role="alert">${S.err}</p>` : ''}
-    <div class="field"><label for="first-name">Your first name</label><input type="text" id="first-name" autocomplete="given-name" placeholder="Margaret" value="${dv('first-name')}"><span class="why">So ${c.lead} knows what to call you.</span></div>
+    <div class="field"><label for="first-name">Your first name</label><input type="text" id="first-name" autocomplete="given-name" placeholder="Margaret" value="${dv('first-name')}"><span class="why">So ${c.lead ? esc(c.lead.name) : 'the team'} knows what to call you.</span></div>
     <div class="field"><label for="mobile">Your mobile number</label><input type="tel" id="mobile" autocomplete="tel" placeholder="04" value="${dv('mobile')}"><span class="why">We text your details and a reminder. The text has your own link to get back in. No password.</span></div>
     <div class="field"><label for="ec">Someone we can ring for you on the day</label><input type="text" id="ec" autocomplete="off" placeholder="Name and number" value="${dv('ec')}"><span class="why">Only used if you need help. You can add this later.</span></div>
     <button class="go" type="button" id="join" data-act="join">Count me in</button>${help}`; },
-  done: () => { const c = myCrew(), n = esc(S.me.name); return `
+  done: () => { const c = myGroup(), n = esc(S.me.name), r = leadRole(c);
+    const looks = c.lead ? `${esc(c.lead.name)}, your ${r}, looks after you on the day.` : `${KIM}, our Volunteer Coordinator, looks after you until your ${r} is confirmed.`;
+    const txtLead = c.lead ? `${esc(c.lead.name)} is your ${r}.` : `${KIM} from SingleTrack looks after you until your ${r} is confirmed, and we will text you then.`;
+    return `
     <div class="cele"><span class="slash" aria-hidden="true"></span>
       <div class="cele-row"><img src="${BADGE}" alt="Mount Buller event badge" width="88" height="88"><h1>You're in, <em>${n}!</em></h1></div></div>
-    <p>Legend. ${c.lead}'s crew just got a whole lot better.</p>
-    <div class="said"><span class="cap">You said yes to</span><p><b>${c.job}</b> with ${c.lead}'s crew.</p><p>Sunday 6 December 2026, ${c.time}.</p><p>${c.place}.</p></div>
+    <p>Legend. The ${c.tn} just got a whole lot better.</p>
+    <div class="said"><span class="cap">You said yes to</span><p><b>${c.title}</b></p><p>${c.job}.</p><p>Sunday 6 December 2026, ${c.time}.</p><p>${c.place}.</p><p id="done-lead">${looks}</p></div>
     <p class="cap">The text we send you now</p>
-    <div class="txt">SingleTrack: Hi ${n}, you're in! ${c.lead}'s crew, Sunday 6 December, ${c.time}, ${where(c)}. Your page is here, no password needed. Need to change something? Use your link or ring [phone].<button class="linkbtn" type="button" id="open-link" data-act="go" data-s="mine">Open my link</button></div>
+    <div class="txt">SingleTrack: Hi ${n}, you're in! ${c.title}, Sunday 6 December, ${c.time}. ${txtLead} Your page is here, no password needed. Need to change something? Use your link or ring [phone].<button class="linkbtn" type="button" id="open-link" data-act="go" data-s="mine">Open my link</button></div>
     <p class="sub">Your link opens your own page. Everything about your day is there, and you can change your mind any time.</p>
     <button class="plainbtn" type="button" id="bring" data-act="bring">Bring someone along</button>
-    <button class="plainbtn soft" type="button" id="see-team" data-act="view" data-v="team">See what the team sees</button>${help}`; },
-  mine: () => { const c = myCrew(), n = esc(S.me.name), fr = mates(), pl = places.find(p => p.id === c.loc);
+    <button class="plainbtn soft" type="button" id="see-team" data-act="view" data-v="team">See what the organisers see</button>${help}`; },
+  mine: () => { const c = myGroup(), n = esc(S.me.name), fr = mates(), pl = places.find(p => p.id === c.loc), r = leadRole(c), me = isMeLead(c);
     const getThere = c.loc === 'village' ? 'Village Square, Summit Road, Mt Buller.' : 'Directions and parking come in your reminder text.';
+    const contact = c.lead && !me ? esc(c.lead.name) : KIM;
+    const day = me ? `Race day. You lead the ${c.tn} at ${pl.name}.` : c.lead ? `Race day. Find ${esc(c.lead.name)} at ${pl.name}.` : `Race day. Head to ${pl.name}. Your ${r} will meet you there.`;
     return `<div class="mine-head"><span class="tag"><span>${n}'s page</span></span><h2>My volunteering</h2>
       <p>This link is yours, ${n}. It opens straight to your page, no password needed. Keep the text so you can come back any time.</p></div>
-    ${S.me.moved ? `<p class="note" id="moved-note">Event HQ moved you to ${c.lead}'s crew. If that does not suit, ring us on [phone].</p>` : ''}
-    <article class="crew" id="my-crew">
-      <div class="who"><span class="av" aria-hidden="true">${c.lead[0]}</span><div><h3>${c.lead}'s crew</h3><p class="role">${c.lead}, ${c.role}, looks after you on the day</p></div></div>
-      <dl class="facts"><dt>The job</dt><dd>${c.job}</dd><dt>When</dt><dd>Sunday 6 December 2026, ${c.time}</dd><dt>Where</dt><dd>${c.place}</dd><dt>Getting there</dt><dd>${getThere}</dd><dt>Bring</dt><dd>Hat, water bottle, a warm layer and a smile</dd><dt>Contact</dt><dd>Ring us on [phone] and we will put you through to ${c.lead}.</dd></dl>
-      ${seeLine(c)}
+    ${S.me.moved ? `<p class="note" id="moved-note">Event HQ moved you to ${c.title}. If that does not suit, ring us on [phone].</p>` : ''}
+    <article class="jcard" id="my-job">
+      <div class="jhead"><h3>${c.title}</h3><p class="jobline">${c.job}</p></div>
+      ${leadBlock(c)}
+      <dl class="facts"><dt>When</dt><dd>Sunday 6 December 2026, ${c.time}</dd><dt>Where</dt><dd>${c.place}</dd><dt>Getting there</dt><dd>${getThere}</dd><dt>Bring</dt><dd>Hat, water bottle, a warm layer and a smile</dd><dt>Contact</dt><dd>Ring us on [phone] and we will put you through to ${contact}.</dd></dl>
+      ${seeLine(c)}${invite(c)}
     </article>
     <section class="box" aria-labelledby="next-head"><h3 id="next-head">What happens next</h3>
       <ol class="tl"><li class="done"><b>Now</b><span>Your confirmation text, with this link. Sent.</span></li>
+        ${c.lead ? '' : `<li id="tl-lead"><b>As soon as we know</b><span>A text to tell you who your ${r} is.</span></li>`}
         <li><b>29 November</b><span>A reminder text, one week before.</span></li>
         <li><b>5 December</b><span>A reminder text the day before, with directions and parking.</span></li>
-        <li><b>Sunday 6 December</b><span>Race day. Find ${c.lead} at ${pl.name}.</span></li></ol></section>
+        <li><b>Sunday 6 December</b><span>${day}</span></li></ol></section>
     <section class="box" aria-labelledby="ec-head"><h3 id="ec-head">Someone we can ring for you</h3>
       <p class="sub">Only used if you need help on the day.</p>
       ${S.me.ec && !S.ecEdit ? `<p class="saved" id="ec-saved"><b>Saved:</b> ${esc(S.me.ec)}</p><button class="smallbtn" type="button" id="ec-change" data-act="ecedit">Change</button>`
@@ -545,82 +596,87 @@ const screens = {
         <button class="plainbtn" type="button" id="ec-save" data-act="ecsave">Save</button>`}</section>
     <section class="box" aria-labelledby="fr-head"><h3 id="fr-head">Coming with you</h3>
       ${fr.length ? `<ul class="friends" id="friend-list">${fr.map(p => `<li><span><b>${esc(p.name)}</b><small>${p.kid ? 'Under 18, stays with you' : 'Grown-up'}${p.mob ? ', gets their own texts' : ''}</small></span><button class="smallbtn" type="button" id="rm-${p.id}" data-act="unfriend" data-val="${p.id}">Remove</button></li>`).join('')}</ul>`
-        : '<p class="sub">Nobody yet. Friends and family are welcome on your crew.</p>'}
+        : '<p class="sub">Nobody yet. Friends and family are welcome to join you.</p>'}
       <button class="plainbtn" type="button" id="bring" data-act="bring">Bring someone along</button></section>
-    ${S.asked ? `<p class="err" id="leave-check">Sure you can't make it? ${c.lead} will miss you, but no hard feelings.${fr.length ? ` ${andList(fr.map(p => esc(p.name)))} will come off the crew too.` : ''}</p><button class="go" type="button" id="leave" data-act="leave">Yes, take me off the crew</button><button class="plainbtn" type="button" id="keep" data-act="keep">No, I'm still coming</button>`
-      : `<div class="btns"><button class="plainbtn" type="button" id="swap" data-act="go" data-s="all">Swap to a different crew</button><button class="plainbtn soft" type="button" id="cant" data-act="ask">I can't make it</button></div>`}
-    <button class="plainbtn soft" type="button" id="see-team" data-act="view" data-v="team">See what the team sees</button>${help}`; },
-  bring: () => { const c = myCrew(), n = spots(c), gs = party(meP()).length, pl = places.find(p => p.id === c.loc);
-    if (n < 1) { const alt = crews.filter(x => x !== c && x.loc === c.loc && spots(x) >= gs + 1);
-      return `${backBar(S.from)}<h2>${c.lead}'s crew is full</h2>
-      <p>Sorry, every spot on ${c.lead}'s crew is taken now, so there is no room for one more. Good problem to have!</p>
-      ${alt.length ? `<p>These crews at ${pl.name} have room for all of you. Swap first, then bring them along.</p>${alt.map(card).join('')}`
-        : `<p>No other crew at ${pl.name} has room for all of you. You could all swap to a crew somewhere else, then bring them along.</p>`}
-      <button class="plainbtn" type="button" id="full-list" data-act="swapmode" data-val="list">Show me all the crews</button>
+    ${S.asked ? `<p class="err" id="leave-check">Sure you can't make it? The ${c.tn} will miss you, but no hard feelings.${fr.length ? ` ${andList(fr.map(p => esc(p.name)))} will come off the roster too.` : ''}</p><button class="go" type="button" id="leave" data-act="leave">Yes, take me off the roster</button><button class="plainbtn" type="button" id="keep" data-act="keep">No, I'm still coming</button>`
+      : `<div class="btns"><button class="plainbtn" type="button" id="swap" data-act="go" data-s="all">Swap to a different job</button><button class="plainbtn soft" type="button" id="cant" data-act="ask">I can't make it</button></div>`}
+    <button class="plainbtn soft" type="button" id="see-team" data-act="view" data-v="team">See what the organisers see</button>${help}`; },
+  bring: () => { const c = myGroup(), n = spots(c), gs = party(meP()).length, pl = places.find(p => p.id === c.loc);
+    if (n < 1) { const alt = groups.filter(x => x !== c && x.loc === c.loc && spots(x) >= gs + 1);
+      return `${backBar(S.from)}<h2>The ${c.tn} is full</h2>
+      <p>Sorry, the ${c.tn} has no room for one more now. Good problem to have!</p>
+      ${alt.length ? `<p>These jobs at ${pl.name} have room for all of you. Swap first, then bring them along.</p>${alt.map(card).join('')}`
+        : `<p>No other job at ${pl.name} has room for all of you. You could all swap to a job somewhere else, then bring them along.</p>`}
+      <button class="plainbtn" type="button" id="full-list" data-act="swapmode" data-val="list">Show me all the jobs</button>
       <button class="plainbtn" type="button" id="full-map" data-act="swapmode" data-val="map">Show me the map</button>${help}`; }
     const kid = S.kind === 'child';
     return `${backBar(S.from)}<h2>Bring someone along</h2>
-    <p class="sub">They join ${c.lead}'s crew with you. ${n === 1 ? 'There is one spot left.' : `There are ${(words[n] || n).toString().toLowerCase()} spots left.`}</p>
+    <p class="sub">They join the ${c.tn} with you. ${n === 1 ? 'There is room for one more.' : `There is room for ${(words[n] || n).toString().toLowerCase()} more.`}</p>
     <p class="q" id="kind-q">Is it a grown-up or a child?</p>
     <div class="choices" role="group" aria-labelledby="kind-q">
       <button class="big" type="button" id="kind-adult" data-act="kind" data-val="adult" aria-pressed="${S.kind === 'adult'}">A grown-up<small>18 or over</small></button>
       <button class="big" type="button" id="kind-child" data-act="kind" data-val="child" aria-pressed="${kid}">A child under 18</button>
     </div>
     ${!S.kind ? '' : `${S.err ? `<p class="err" role="alert">${S.err}</p>` : ''}
-    <div class="field"><label for="fr-name">Their first name</label><input type="text" id="fr-name" autocomplete="off" value="${dv('fr-name')}"><span class="why">So ${c.lead} knows who is coming.</span></div>
+    <div class="field"><label for="fr-name">Their first name</label><input type="text" id="fr-name" autocomplete="off" value="${dv('fr-name')}"><span class="why">So ${c.lead && !isMeLead(c) ? esc(c.lead.name) : 'the team'} knows who is coming.</span></div>
     ${kid ? '<p class="note">Under 18s volunteer alongside the parent or guardian who signed them up. They stay with you all day.</p>'
       : `<div class="field"><label for="fr-mob">Their mobile (optional)</label><input type="tel" id="fr-mob" autocomplete="off" placeholder="04" value="${dv('fr-mob')}"><span class="why">So we can text them their own details. Leave it blank and we will text you instead.</span></div>`}
-    <button class="go" type="button" id="fr-add" data-act="addfriend">Add them to ${c.lead}'s crew</button>`}${help}`; },
-  gone: () => `<h2>No worries. You're off the crew.</h2><p>Thanks for letting us know early. It gives us time to find someone else. We would love to see you at the next one.</p>
+    <button class="go" type="button" id="fr-add" data-act="addfriend">Add them to the ${c.tn}</button>`}${help}`; },
+  gone: () => `<h2>No worries. You're off the roster.</h2><p>Thanks for letting us know early. It gives us time to find someone else. We would love to see you at the next one.</p>
     <button class="go" type="button" id="restart" data-act="go" data-s="home">Start again</button>${help}`
 };
 
-/* ---- Team view ---- */
+/* ---- Organiser view ---- */
 function chip(p) {
-  const g = party(p), label = g.map((x, i) => esc(x.name) + (i === 0 && x.src === 'me' ? ' (new)' : '')).join(' + ');
-  return `<button type="button" class="chip${p.src === 'me' ? ' new' : ''}" id="mv-${p.id}" data-act="tmove" data-val="${p.id}">${label}${p.src === 'phone' ? '<small>added by phone</small>' : ''}<span class="mv">Move</span></button>`;
+  const g = party(p), label = g.map((x, i) => esc(x.name) + (i === 0 && x.src === 'me' ? ' (new)' : '')).join(' + '), c = byId(p.gid);
+  return `<button type="button" class="chip${p.src === 'me' ? ' new' : ''}" id="mv-${p.id}" data-act="tmove" data-val="${p.id}">${label}${c.lead && c.lead.pid === p.id ? '<small>lead</small>' : ''}${p.src === 'phone' ? '<small>added by phone</small>' : ''}<span class="mv">Move</span></button>`;
 }
 function rost(c) {
-  const ps = onCrew(c.id), gap = c.need - ps.length;
+  const ps = onGroup(c.id), gap = c.need - ps.length;
+  const off = c.offers.map(id => ppl.find(p => p.id === id)).filter(Boolean), here = off.filter(p => p.gid === c.id);
+  const state = c.lead ? `<p class="lstate" id="lead-${c.id}">${leadTitle(c)}: ${esc(c.lead.name)}</p>`
+    : `<p class="lstate none" id="lead-${c.id}">No lead yet</p>${off.length ? `<p class="offer" id="offers-${c.id}">Offered to lead: ${andList(off.map(p => esc(p.name) + (p.gid === c.id ? '' : ` (signed up for the ${byId(p.gid).tn})`)))}</p>` : ''}`;
   return `<div class="rost${gap >= 2 ? ' need' : ''}" id="rost-${c.id}">
-    <div class="rhead"><h3>${c.lead}'s crew</h3><span class="pill ${gap >= 2 ? 'need' : gap ? 'some' : 'ok'}" id="gap-${c.id}">${gap ? 'Needs ' + gap : 'Full'}</span></div>
-    <p class="sub">${c.job}. ${where(c)}, Sunday ${c.time}. ${ps.length} of ${c.need} filled.</p>
+    <div class="rhead"><h3>${c.title}</h3><span class="pill ${gap >= 2 ? 'need' : gap ? 'some' : 'ok'}" id="gap-${c.id}">${gap ? 'Needs ' + gap + ' more' : 'Full'}</span></div>
+    <p class="sub">${c.job}. Sunday ${c.time}. ${ps.length} of ${c.need} filled.</p>
+    ${state}
     <div class="meter" role="img" aria-label="${ps.length} of ${c.need} filled"><i style="width:${Math.min(100, ps.length / c.need * 100)}%"></i></div>
     <div class="names">${ps.filter(p => !p.host).map(chip).join('')}${Array.from({ length: Math.max(0, gap) }, () => '<span class="gap">open</span>').join('')}</div>
-    <div class="ract"><button type="button" id="msg-${c.id}" data-act="tmsg" data-val="${c.id}">Message this crew</button>${gap >= 2 ? `<button type="button" id="past-${c.id}" data-act="tpast" data-val="${c.id}">Ask past volunteers</button>` : ''}</div>
+    <div class="ract">${c.lead ? '' : here.map(p => `<button type="button" id="confirm-${c.id}-${p.id}" data-act="mklead" data-val="${c.id}" data-pid="${p.id}">Confirm ${esc(p.name)} as lead</button>`).join('')}<button type="button" id="msg-${c.id}" data-act="tmsg" data-val="${c.id}">Message this team</button>${gap >= 2 ? `<button type="button" id="past-${c.id}" data-act="tpast" data-val="${c.id}">Ask past volunteers</button>` : ''}</div>
   </div>`;
 }
 const tback = '<div class="step"><button class="back" type="button" id="t-back" data-act="tv" data-val="roster">&larr; Back to the roster</button></div>';
 function totals() {
-  const filled = ppl.length, need = crews.reduce((a, c) => a + c.need, 0);
-  return { filled, need, short: crews.filter(c => spots(c) >= 2).length, fresh: ppl.filter(p => p.src !== 'ex').length };
+  const filled = ppl.length, need = groups.reduce((a, c) => a + c.need, 0);
+  return { filled, need, short: groups.filter(c => spots(c) >= 2).length, nolead: groups.filter(c => !c.lead).length, fresh: ppl.filter(p => p.src !== 'ex').length };
 }
 const teams = {
-  roster: () => { const t = totals(), list = crews.slice().sort((a, b) => spots(b) / b.need - spots(a) / a.need);
-    return `<div class="thead"><span class="cap">Team view, Mt Buller SkyRun, Sunday 6 December 2026</span><h2>Sunday roster</h2></div>
-    <div class="sum" id="summary"><div><b id="sum-filled">${t.filled} of ${t.need}</b><span>spots filled</span></div><div><b id="sum-short">${t.short}</b><span>crews need 2 or more</span></div><div><b id="sum-new">${t.fresh}</b><span>new today</span></div></div>
-    <div class="tools"><button class="plainbtn" type="button" id="t-add" data-act="tv" data-val="add">Add a volunteer by phone</button><button class="plainbtn soft" type="button" id="t-print" data-act="toast" data-val="In the real thing, this prints a roster for every crew as a backup for race day.">Print rosters</button></div>
+  roster: () => { const t = totals(), list = groups.slice().sort((a, b) => spots(b) / b.need - spots(a) / a.need);
+    return `<div class="thead"><span class="cap">Organiser view, Mt Buller SkyRun, Sunday 6 December 2026</span><h2>Sunday roster</h2></div>
+    <div class="sum" id="summary"><div><b id="sum-filled">${t.filled} of ${t.need}</b><span>volunteers signed up</span></div><div><b id="sum-short">${t.short}</b><span>jobs need 2 or more</span></div><div><b id="sum-lead">${t.nolead}</b><span>jobs need a lead</span></div><div><b id="sum-new">${t.fresh}</b><span>new today</span></div></div>
+    <div class="tools"><button class="plainbtn" type="button" id="t-add" data-act="tv" data-val="add">Add a volunteer by phone</button><button class="plainbtn soft" type="button" id="t-print" data-act="toast" data-val="In the real thing, this prints a roster for every job as a backup for race day.">Print rosters</button></div>
     ${seg('tmode', S.tmode, 'rosters')}
-    ${S.tmode === 'map' ? mapBlock('team') : `<p class="sub">Crews with the biggest gaps sit at the top. Tap a name to move that person to another crew.</p><div class="rgrid">${list.map(rost).join('')}</div>`}
+    ${S.tmode === 'map' ? mapBlock('team') : `<p class="sub">Jobs with the biggest gaps sit at the top. Tap a name to move that person or confirm them as lead.</p><div class="rgrid">${list.map(rost).join('')}</div>`}
     ${S.log.length ? `<section class="log" id="sent-log" aria-labelledby="log-head"><h3 id="log-head">Sent messages</h3><p class="sub">Demo only. Nothing was actually sent.</p>
       <ul>${S.log.map(m => `<li><b>To ${m.to}, ${m.n} ${m.n === 1 ? 'person' : 'people'}</b><span>${esc(m.text)}</span></li>`).join('')}</ul></section>` : ''}`; },
-  add: () => { const open = crews.filter(c => spots(c) > 0);
+  add: () => { const open = groups.filter(c => spots(c) > 0);
     return `${tback}<div class="sheet"><h2>Add a volunteer by phone</h2>
     <p class="sub">For when someone rings up. Type in their details while you are on the phone and we text them their link.</p>
     ${S.err ? `<p class="err" role="alert">${S.err}</p>` : ''}
     <div class="field"><label for="add-name">First name</label><input type="text" id="add-name" autocomplete="off" value="${dv('add-name')}"></div>
     <div class="field"><label for="add-mob">Mobile</label><input type="tel" id="add-mob" autocomplete="off" placeholder="04" value="${dv('add-mob')}"><span class="why">So we can text them their details and link.</span></div>
-    <p class="q" id="add-q">Which crew?</p>
-    <div class="choices" role="group" aria-labelledby="add-q">${open.map(c => `<button class="big" type="button" id="add-crew-${c.id}" data-act="addcrew" data-val="${c.id}" aria-pressed="${S.addCrew === c.id}">${c.lead}'s crew<small>${where(c)}, ${c.time}. ${spotWords(spots(c))}.</small></button>`).join('')}</div>
+    <p class="q" id="add-q">Which job?</p>
+    <div class="choices" role="group" aria-labelledby="add-q">${open.map(c => `<button class="big" type="button" id="add-to-${c.id}" data-act="addgrp" data-val="${c.id}" aria-pressed="${S.addGrp === c.id}">${c.title}<small>${c.time}. ${needWords(spots(c))}.</small></button>`).join('')}</div>
     <button class="go" type="button" id="add-save" data-act="addsave">Add to the roster</button></div>`; },
-  move: () => { const p = ppl.find(x => x.id === S.mv.pid), g = party(p), from = byId(p.crew), names = andList(g.map(x => esc(x.name)));
-    const ok = crews.filter(c => c !== from && spots(c) >= g.length), to = S.mv.to && byId(S.mv.to);
+  move: () => { const p = ppl.find(x => x.id === S.mv.pid), g = party(p), from = byId(p.gid), names = andList(g.map(x => esc(x.name)));
+    const ok = groups.filter(c => c !== from && spots(c) >= g.length), to = S.mv.to && byId(S.mv.to), isLead = from.lead && from.lead.pid === p.id;
     return `${tback}<div class="sheet"><h2>Move ${names}</h2>
-    <p class="sub">Now on ${from.lead}'s crew, ${where(from)}, ${from.time}.${g.length > 1 ? ` They are a group, so they move together and need ${g.length} spots.` : ''}</p>
-    ${ok.length ? `<p class="q" id="mv-q">Move to which crew?</p><div class="choices" role="group" aria-labelledby="mv-q">${ok.map(c => `<button class="big" type="button" id="move-to-${c.id}" data-act="mvto" data-val="${c.id}" aria-pressed="${S.mv.to === c.id}">${c.lead}'s crew<small>${where(c)}, ${c.time}. ${spotWords(spots(c))}.</small></button>`).join('')}</div>`
-      : '<p class="err">No other crew has room right now.</p>'}
-    ${to ? `<p class="note" id="move-check">Move ${names} from ${from.lead}'s crew to ${to.lead}'s crew? We would text the new details.</p>
+    <p class="sub">Now on the ${from.tn}, ${from.title}, ${from.time}.${g.length > 1 ? ` They are a group, so they move together and need room for ${g.length}.` : ''}</p>
+    ${ok.length ? `<p class="q" id="mv-q">Move to which job?</p><div class="choices" role="group" aria-labelledby="mv-q">${ok.map(c => `<button class="big" type="button" id="move-to-${c.id}" data-act="mvto" data-val="${c.id}" aria-pressed="${S.mv.to === c.id}">${c.title}<small>${c.time}. ${needWords(spots(c))}.</small></button>`).join('')}</div>`
+      : '<p class="err">No other job has room right now.</p>'}
+    ${to ? `<p class="note" id="move-check">Move ${names} from the ${from.tn} to the ${to.tn}? We would text the new details.${isLead ? ` ${esc(p.name)} is the lead here, so this job would have no lead.` : ''}</p>
       <button class="go" type="button" id="move-ok" data-act="mvok">Yes, move ${g.length > 1 ? 'them' : esc(p.name)}</button>` : ''}
+    ${from.lead ? '' : `<p class="q">Or keep ${esc(p.name)} here and make them the lead</p><button class="plainbtn" type="button" id="make-lead" data-act="mklead" data-val="${from.id}" data-pid="${p.id}">Confirm ${esc(p.name)} as ${from.aid ? 'Aid Station Manager' : 'lead'}</button>`}
     <button class="plainbtn soft" type="button" id="move-cancel" data-act="tv" data-val="roster">Cancel</button></div>`; },
   msg: () => { const r = recips(), text = S.d['msg-text'] != null ? S.d['msg-text'] : starter();
     return `${tback}<div class="sheet"><h2>Message ${r.label}</h2>
@@ -636,21 +692,29 @@ const teams = {
     <button class="go" type="button" id="sent-back" data-act="tv" data-val="roster">Back to the roster</button></div>`
 };
 function recips() {
-  const c = byId(S.msg.crew);
+  const c = byId(S.msg.gid);
   if (S.msg.past) return { label: 'past volunteers', n: PAST, past: true, left: 0, c };
-  const ps = onCrew(c.id), n = ps.filter(p => p.mob).length;
-  return { label: `${c.lead}'s crew`, n, left: ps.length - n, c };
+  const ps = onGroup(c.id), n = ps.filter(p => p.mob).length;
+  return { label: `the ${c.tn}`, n, left: ps.length - n, c };
 }
 function starter() {
-  const c = byId(S.msg.crew);
+  const c = byId(S.msg.gid);
   return S.msg.past
-    ? `Hi, it's the SingleTrack team. ${c.lead}'s crew at ${where(c)} needs ${spots(c)} more helpers for the Mt Buller SkyRun on Sunday 6 December, ${c.time}. Keen? Reply YES or ring [phone]. Good vibes guaranteed.`
-    : `Hi ${c.lead}'s crew, thanks for putting your hand up for the Mt Buller SkyRun. See you Sunday 6 December, ${c.time}, at ${where(c)}. Questions? Ring us on [phone]. The SingleTrack team`;
+    ? `Hi, it's the SingleTrack team. We need ${vols(spots(c))} more at ${c.title} for the Mt Buller SkyRun on Sunday 6 December, ${c.time}. Keen? Reply YES or ring [phone]. Good vibes guaranteed.`
+    : `Hi ${c.tn}, thanks for putting your hand up for the Mt Buller SkyRun. See you Sunday 6 December, ${c.time}, at ${where(c)}. ${c.lead ? `${c.lead.name} is your ${leadRole(c)}.` : `We will text you when your ${leadRole(c)} is confirmed.`} Questions? Ring us on [phone]. The SingleTrack team`;
+}
+// A lead who has left the job, or an offer from someone who has pulled out, no longer counts.
+function tidy() {
+  groups.forEach(c => {
+    if (c.lead && c.lead.pid && !ppl.some(p => p.id === c.lead.pid && p.gid === c.id)) c.lead = null;
+    c.offers = c.offers.filter(id => ppl.some(p => p.id === id));
+  });
 }
 
 const scr = () => S.view + ':' + (S.view === 'team' ? S.tv : S.step);
 function render(focus) {
   const team = S.view === 'team';
+  tidy();
   app.className = team ? 'wide' : '';
   heroEl.innerHTML = !team && S.step === 'home' ? hero() : '';
   app.innerHTML = team ? teams[S.tv]() : screens[S.step]();
@@ -661,7 +725,7 @@ function render(focus) {
 }
 let tt;
 function toast(msg) { const t = document.getElementById('toast'); t.textContent = msg; t.hidden = false; clearTimeout(tt); tt = setTimeout(() => { t.hidden = true; }, 4200); }
-function moveParty(p, to) { party(p).forEach(x => { x.crew = to; }); }
+function moveParty(p, to) { party(p).forEach(x => { x.gid = to; }); }
 
 document.addEventListener('click', e => {
   const b = e.target.closest('[data-act]'); if (!b) return;
@@ -684,26 +748,36 @@ document.addEventListener('click', e => {
   else if (a === 'when') { S.when = v; S.step = 'style'; }
   else if (a === 'style') { S.style = v; S.step = 'matches'; }
   else if (a === 'pick') {
-    if (S.me) { const c = byId(v); if (spots(c) >= party(meP()).length) { moveParty(meP(), v); S.me.moved = false; S.step = 'mine'; toast(`Swapped. ${c.lead} knows you are coming.`); } }
+    if (S.me) { const c = byId(v); if (spots(c) >= party(meP()).length) { moveParty(meP(), v); S.me.moved = false; S.step = 'mine'; toast(`Swapped. You are on the ${c.tn} now.`); } }
     else { S.pick = v; S.step = 'details'; }
+  }
+  else if (a === 'offer') {
+    const c = byId(v);
+    if (c && !c.lead) {
+      if (S.me) { if (!c.offers.includes(S.me.pid)) c.offers.push(S.me.pid); toast('Thank you. The SingleTrack team will be in touch for a chat. Nothing is set until then.'); }
+      else { S.pre.add(v); toast('Thank you. Once you sign up, the SingleTrack team will be in touch for a chat. Nothing is set until then.'); }
+    }
+    render(false); const o = document.getElementById('offered-' + v); if (o) o.focus({ preventScroll: true });
+    return;
   }
   else if (a === 'join') {
     const n = val('first-name'), c = byId(S.pick);
     if (!n) S.err = 'Please tell us your first name.';
     else if (!okMob(val('mobile'))) S.err = 'That mobile number does not look right. It should be 10 digits, starting with 04.';
-    else if (spots(c) < 1) S.err = `Sorry, ${c.lead}'s crew filled up a moment ago. Tap Back to pick another crew.`;
-    else { const p = addP(n, S.pick, { src: 'me' }); S.me = { pid: p.id, name: n, ec: val('ec'), moved: false }; S.step = 'done'; }
+    else if (spots(c) < 1) S.err = `Sorry, the ${c.tn} filled up a moment ago. Tap Back to pick another job.`;
+    else { const p = addP(n, S.pick, { src: 'me' }); S.me = { pid: p.id, name: n, ec: val('ec'), moved: false };
+      S.pre.forEach(g => { const x = byId(g); if (x && !x.lead && !x.offers.includes(p.id)) x.offers.push(p.id); }); S.pre.clear(); S.step = 'done'; }
   }
   else if (a === 'bring') { S.from = S.step; S.kind = null; S.step = 'bring'; }
   else if (a === 'kind') { S.kind = v; }
   else if (a === 'addfriend') {
-    const n = val('fr-name'), m = S.kind === 'adult' ? val('fr-mob') : '', c = myCrew();
+    const n = val('fr-name'), m = S.kind === 'adult' ? val('fr-mob') : '', c = myGroup();
     if (!n) S.err = 'Please type their first name.';
     else if (m && !okMob(m)) S.err = 'That mobile number does not look right. It should be 10 digits, starting with 04. Or leave it blank.';
-    else if (spots(c) < 1) S.err = `Sorry, ${c.lead}'s crew is full now.`;
-    else { addP(n, c.id, { src: 'friend', host: S.me.pid, kid: S.kind === 'child', mob: !!m }); S.step = 'mine'; toast(`${n} is on ${c.lead}'s crew with you.`); }
+    else if (spots(c) < 1) S.err = `Sorry, the ${c.tn} is full now.`;
+    else { addP(n, c.id, { src: 'friend', host: S.me.pid, kid: S.kind === 'child', mob: !!m }); S.step = 'mine'; toast(`${n} is on the ${c.tn} with you.`); }
   }
-  else if (a === 'unfriend') { const i = ppl.findIndex(p => p.id === v); if (i > -1) { const [p] = ppl.splice(i, 1); toast(`${p.name} is off the crew.`); } }
+  else if (a === 'unfriend') { const i = ppl.findIndex(p => p.id === v); if (i > -1) { const [p] = ppl.splice(i, 1); toast(`${p.name} is off the roster.`); } }
   else if (a === 'swapmode') { S.mode = v; S.step = 'all'; }
   else if (a === 'ecedit') { S.ecEdit = true; d.ec2 = S.me.ec; }
   else if (a === 'ecsave') { const t = val('ec2'); if (!t) S.err = 'Please type a name and a phone number.'; else { S.me.ec = t; S.ecEdit = false; delete d.ec2; toast('Saved. Thank you.'); } }
@@ -711,24 +785,30 @@ document.addEventListener('click', e => {
   else if (a === 'keep') S.asked = false;
   else if (a === 'leave') { const gone = new Set(party(meP()).map(p => p.id)); for (let i = ppl.length - 1; i >= 0; i--) if (gone.has(ppl[i].id)) ppl.splice(i, 1);
     S.me = null; S.asked = false; S.pick = null; S.step = 'gone'; }
-  else if (a === 'tv') { S.tv = v; S.addCrew = null; S.mv = null; }
-  else if (a === 'addcrew') S.addCrew = v;
+  else if (a === 'tv') { S.tv = v; S.addGrp = null; S.mv = null; }
+  else if (a === 'addgrp') S.addGrp = v;
   else if (a === 'addsave') {
-    const n = val('add-name'), c = S.addCrew && byId(S.addCrew);
+    const n = val('add-name'), c = S.addGrp && byId(S.addGrp);
     if (!n) S.err = 'Please type their first name.';
     else if (!okMob(val('add-mob'))) S.err = 'That mobile number does not look right. It should be 10 digits, starting with 04.';
-    else if (!c) S.err = 'Please pick a crew.';
-    else if (spots(c) < 1) S.err = `${c.lead}'s crew is full now. Please pick another.`;
-    else { addP(n, c.id, { src: 'phone' }); S.tv = 'roster'; S.addCrew = null; toast(`${n} is on ${c.lead}'s crew.`); }
+    else if (!c) S.err = 'Please pick a job.';
+    else if (spots(c) < 1) S.err = `The ${c.tn} is full now. Please pick another job.`;
+    else { addP(n, c.id, { src: 'phone' }); S.tv = 'roster'; S.addGrp = null; toast(`${n} is on the ${c.tn}.`); }
   }
   else if (a === 'tmove') { S.mv = { pid: v, to: null }; S.tv = 'move'; }
   else if (a === 'mvto') S.mv.to = v;
   else if (a === 'mvok') {
     const p = ppl.find(x => x.id === S.mv.pid), c = byId(S.mv.to);
-    if (p && c && spots(c) >= party(p).length) { moveParty(p, c.id); if (p.src === 'me') { S.me.moved = true; S.asked = false; } toast(`Moved ${p.name} to ${c.lead}'s crew.`); }
+    if (p && c && spots(c) >= party(p).length) { moveParty(p, c.id); if (p.src === 'me') { S.me.moved = true; S.asked = false; } toast(`Moved ${p.name} to the ${c.tn}.`); }
     S.tv = 'roster'; S.mv = null;
   }
-  else if (a === 'tmsg' || a === 'tpast') { S.msg = { crew: v, past: a === 'tpast' }; S.tv = 'msg'; }
+  else if (a === 'mklead') {
+    const c = byId(v), p = ppl.find(x => x.id === b.dataset.pid);
+    if (c && p && p.gid === c.id && !c.lead) { c.lead = { name: p.name, pid: p.id }; c.offers = c.offers.filter(id => id !== p.id);
+      toast(`${p.name} is now the ${leadRole(c)} for the ${c.tn}. In the real thing, the team would get a text.`); }
+    S.tv = 'roster'; S.mv = null;
+  }
+  else if (a === 'tmsg' || a === 'tpast') { S.msg = { gid: v, past: a === 'tpast' }; S.tv = 'msg'; }
   else if (a === 'send') {
     const t = val('msg-text'), r = recips();
     if (!t) S.err = 'Please type a message first.';
